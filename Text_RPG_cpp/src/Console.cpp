@@ -84,9 +84,6 @@ void Console::ClearBuffer()
 	// Set all the values of the buffer to an empty space
 	for (int i = 0; i < BUFFER_SIZE; i++)
 		m_pScreen[i] = L' ';
-
-	// Reset all the buffer to white
-	SetTextColor(BUFFER_SIZE, 0, 0, m_hConsole, WHITE);
 }
 
 void Console::Write(int x, int y, const std::wstring& text, WORD color)
