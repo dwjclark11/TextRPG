@@ -21,7 +21,7 @@ bool Game::Init()
 	m_pKeyboard = std::make_unique<Keyboard>();
 	m_pStateMachine = std::make_unique<StateMachine>();
 
-	m_pStateMachine->PushState(std::make_unique<GameState>(*m_pKeyboard, *m_pStateMachine));
+	m_pStateMachine->PushState(std::make_unique<GameState>(*m_pConsole, *m_pKeyboard, *m_pStateMachine));
 
 	return true;
 }
@@ -92,8 +92,6 @@ void Game::Update()
 
 void Game::Draw()
 {
-	m_pConsole->Write(10, 10, L"Hello World!", RED);
-
 	if (m_pStateMachine->Empty())
 	{
 		TRPG_ERROR("NO STATES IN STATE MACHINE TO DRAW!");
