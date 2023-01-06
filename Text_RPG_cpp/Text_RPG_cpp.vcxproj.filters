@@ -68,5 +68,8 @@
     <ClInclude Include="src\states\GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Selector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
