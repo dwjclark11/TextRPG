@@ -1,5 +1,6 @@
 #include "Console.h"
 #include "Logger.h"
+#include <algorithm>
 #include <vector>
 
 bool Console::SetTextColor(int size, int x, int y, HANDLE handle, WORD color)
@@ -88,7 +89,18 @@ void Console::ClearBuffer()
 
 void Console::Write(int x, int y, const std::wstring& text, WORD color)
 {
-	SetTextColor(text.size(), x, y, m_hConsole, color);
+	std::vector<wchar_t> invalidCharacters{ L' ', L'\n', L'\t', L'\r' };
+
+	auto is_any_of = [&](wchar_t character) {
+		if (text.size() > 1 || text.empty())
+			return false;
+
+		return character == text[0]; };
+
+	if (std::find_if(invalidCharacters.begin(), invalidCharacters.end(), is_any_of) == std::end(invalidCharacters))
+		SetTextColor(text.size(), x, y, m_hConsole, color);
+
+	
 	int pos = y * SCREEN_WIDTH + x;
 	swprintf(&m_pScreen[pos], BUFFER_SIZE, text.c_str());
 }
