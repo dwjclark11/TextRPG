@@ -44,6 +44,15 @@ private:
 	bool m_bShowCursor;
 	int m_Rows;
 
+	void MoveUp();
+	void MoveDown();
+	void MoveLeft();
+	void MoveRight();
+	void OnAction();
+
+	void DrawItem(int x, int y, T item);
+	void OnSelection(int index, std::vector<T> data);
+
 public:
 	Selector(Console& console, Keyboard& keyboard, std::vector<T> data, SelectorParams params = SelectorParams());
 	Selector(Console& console, Keyboard& keyboard, 
@@ -60,15 +69,6 @@ public:
 	const int GetIndex() const { return m_Params.currentX + (m_Params.currentY * m_Params.columns); }
 	
 	void ProcessInputs();
-	void MoveUp();
-	void MoveDown();
-	void MoveLeft();
-	void MoveRight();
-	void OnAction();
-
-	void DrawItem(int x, int y, T item);
-	void OnSelection(int index, std::vector<T> data);
-
 	void Draw();
 };
 
