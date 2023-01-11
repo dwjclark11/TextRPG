@@ -1,6 +1,8 @@
 #pragma once
 #include "IState.h"
 #include "../Selector.h"
+#include "../Player.h"
+#include <memory>
 
 class Console;
 class Keyboard;
@@ -14,7 +16,7 @@ private:
 	StateMachine& m_StateMachine;
 
 	Selector<> m_Selector;
-
+	std::unique_ptr<Player> m_TestPlayer;
 public:
 	GameState(Console& console, Keyboard& keyboard, StateMachine& stateMachine);
 	~GameState();

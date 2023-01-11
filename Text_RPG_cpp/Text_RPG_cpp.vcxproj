@@ -128,21 +128,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Actor.cpp" />
     <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\inputs\Keyboard.cpp" />
     <ClCompile Include="src\Logger.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\states\GameState.cpp" />
     <ClCompile Include="src\states\StateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Actor.h" />
     <ClInclude Include="src\Console.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\inputs\Button.h" />
     <ClInclude Include="src\inputs\Keyboard.h" />
     <ClInclude Include="src\inputs\Keys.h" />
     <ClInclude Include="src\Logger.h" />
+    <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Selector.h" />
     <ClInclude Include="src\states\GameState.h" />
     <ClInclude Include="src\states\IState.h" />
