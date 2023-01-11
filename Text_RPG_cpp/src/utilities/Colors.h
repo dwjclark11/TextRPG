@@ -1,18 +1,19 @@
 #pragma once
+#include <Windows.h>
 
-#define BLACK				0
-#define BLUE				1
-#define GREEN				2
-#define AQUA				3
-#define RED					4
-#define PURPLE				5
-#define YELLOW				6
-#define WHITE				7
-#define GRAY				8
-#define LIGHT_BLUE			9
-#define LIGHT_GREEN			10
-#define LIGHT_AQUA			11
-#define LIGHT_RED			12
-#define LIGHT_PURPLE		13
-#define LIGHT_YELLOW		14
-#define BRIGHT_WHITE		15
+constexpr WORD BLACK				= 0;
+constexpr WORD BLUE					= 1;
+constexpr WORD GREEN				= 2;
+constexpr WORD AQUA					= 3;
+constexpr WORD RED					= 4;
+constexpr WORD PURPLE				= 5;
+constexpr WORD YELLOW				= 6;
+constexpr WORD WHITE				= 7;
+constexpr WORD GRAY					= 8;
+constexpr WORD LIGHT_BLUE			= 9 ;
+constexpr WORD LIGHT_GREEN			= 10;
+constexpr WORD LIGHT_AQUA			= 11;
+constexpr WORD LIGHT_RED			= 12;
+constexpr WORD LIGHT_PURPLE			= 13;
+constexpr WORD LIGHT_YELLOW			= 14;
+constexpr WORD BRIGHT_WHITE			= 15;

@@ -1,7 +1,5 @@
 #pragma once
-
 #include "utilities/Colors.h"
-#include <Windows.h>
 #include <memory>
 #include <string>
 
