@@ -9,6 +9,7 @@
 #include "inputs/Keyboard.h"
 #include "Logger.h"
 
+
 struct SelectorParams
 {
 	int x, y, columns, currentX, currentY, spacingX, spacingY;
@@ -62,13 +63,37 @@ public:
 
 	void SetData(std::vector<T> data) { m_Data = data; }
 	const std::vector<T>& GetData() { return m_Data; }
+	
+	/*
+	* This sets the OnSelection function that MUST be overwritten for each new selector object.
+	* What each selector does will vary; Therefore, this function should be updated for each new Selector object.
+	* @param This takes in an std::function ~ func(int x, int y, T item).
+	*/
 	void SetSelectionFunc(std::function<void(int, std::vector<T>)> on_selection) { m_OnSelection = on_selection; }
+	
+	/*
+	* This sets the DrawItem function that should be overwritten for each new selector object
+	* @param This takes in an std::function ~ func(int x, int y, T item). 
+	*/
 	void SetDrawFunc(std::function<void(int, int, T)> on_draw_item) { m_OnDrawItem = on_draw_item; }
+	
 	void ShowCursor() { m_bShowCursor = true; }
 	void HideCursor() { m_bShowCursor = false; }
+	
+	/*
+	* @return This returns the current cursor index as an integer value
+	*/
 	const int GetIndex() const { return m_Params.currentX + (m_Params.currentY * m_Params.columns); }
 	
+	/*
+	* Process the user inputs. The move functions and the action functions
+	* are called here.
+	*/
 	void ProcessInputs();
+
+	/*
+	* Draw the cursor and all of the Selectable items
+	*/
 	void Draw();
 };
 
