@@ -7,7 +7,7 @@ class Actor
 public:
 	enum class ActorType
 	{
-		WARRIOR = 0, BLACK_MAGE, THIEF,
+		WARRIOR = 0, BLACK_MAGE, THIEF, FIGHTER,
 	};
 private:
 	const std::vector<std::wstring> m_EquipmentSlotLabels {L"Weapon:", L"Head Gear:", L"Armor:", L"Foot Wear:", L"Accessory:"};
@@ -67,6 +67,4 @@ public:
 	* to zero and sets the dead flag.
 	*/
 	void TakeDamage(int damage);
-
-
 };

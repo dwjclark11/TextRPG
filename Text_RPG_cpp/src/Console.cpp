@@ -2,6 +2,7 @@
 #include "Logger.h"
 #include <algorithm>
 #include <vector>
+#include <cassert>
 
 bool Console::SetTextColor(int size, int x, int y, HANDLE handle, WORD color)
 {
@@ -100,8 +101,19 @@ void Console::Write(int x, int y, const std::wstring& text, WORD color)
 	if (std::find_if(invalidCharacters.begin(), invalidCharacters.end(), is_any_of) == std::end(invalidCharacters))
 		SetTextColor(text.size(), x, y, m_hConsole, color);
 
-	
+	// Get the position in the buffer based on the index
 	int pos = y * SCREEN_WIDTH + x;
+
+	// Check to see if the position goes beyond the BUFFER_SIZE
+	assert(pos + text.size() < BUFFER_SIZE);
+
+	// We do not wat to write to a position that is beyond the buffer size
+	if (pos + text.size() >= BUFFER_SIZE)
+	{
+		TRPG_ERROR("Trying to write to a position that is beyond the BUFFER SIZE!");
+		return;
+	}
+		
 	swprintf(&m_pScreen[pos], BUFFER_SIZE, text.c_str());
 }
 
