@@ -41,7 +41,7 @@ Armor::Armor(const std::wstring& name, const std::wstring& description, int buy_
 	m_BuyPrice = buy_price;
 	m_SellPrice = sell_price;
 	m_StatModifier = stat_modifier;
-	SetEquipType(EquipType::WEAPON);
+	SetEquipType(EquipType::ARMOR);
 	m_WeaponProperties = WeaponProperties();
 	m_ArmorProperties = armor_properties;
 }
