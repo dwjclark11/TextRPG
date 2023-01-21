@@ -15,6 +15,15 @@ Actor::Actor(const std::wstring& name, int level, int max_hp, ActorType type)
 	, m_MaxHP{max_hp}
 	, m_bDead{false}
 	, m_eActorType{type}
+	, m_mapEquipmentSlots{
+		{ Stats::EquipSlots::WEAPON, nullptr},
+		{ Stats::EquipSlots::HEADGEAR, nullptr},
+		{ Stats::EquipSlots::CHEST_BODY, nullptr},
+		{ Stats::EquipSlots::FOOTWEAR, nullptr},
+		{ Stats::EquipSlots::ACCESSORY, nullptr},
+	}
+	, m_Stats{10, 3, 5, 5, 7} // TEST STATS
+	
 {
 
 }

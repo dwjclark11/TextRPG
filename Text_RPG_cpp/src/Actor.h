@@ -1,6 +1,10 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <memory>
+#include "Stats.h"
+#include "Equipment.h"
 
 class Actor
 {
@@ -10,8 +14,8 @@ public:
 		WARRIOR = 0, BLACK_MAGE, THIEF, FIGHTER,
 	};
 private:
-	const std::vector<std::wstring> m_EquipmentSlotLabels {L"Weapon:", L"Head Gear:", L"Armor:", L"Foot Wear:", L"Accessory:"};
-	// TODO: std::vector<std::wstring> m_StatLabels;
+	const std::vector<std::wstring> m_EquipmentSlotLabels {L"Weapon", L"Headgear", L"Armor", L"Footwear", L"Accessory"};
+	const std::vector<std::wstring> m_StatLabels {L"Attack", L"Strength", L"Intelligence", L"Speed", L"Dexterity", L"Stamina" };
 
 protected:
 	std::wstring m_sName;
@@ -19,13 +23,10 @@ protected:
 
 	bool m_bDead;
 	ActorType m_eActorType;
+	
+	std::unordered_map<Stats::EquipSlots, std::shared_ptr<Equipment>> m_mapEquipmentSlots;
 
-	// TODO: 
-	/*
-		- map to equipment type of equiped items -- We need our equipment
-		- Stats == Create a class
-		- Actions
-	*/
+	Stats m_Stats;
 
 public:
 	Actor();
@@ -41,8 +42,12 @@ public:
 	* each actor. The slots will never need to be changed.
 	*/
 	inline const std::vector<std::wstring>& GetEquipSlotLabels() const { return m_EquipmentSlotLabels; }
+	inline const std::vector<std::wstring>& GetStatLabels() const { return m_StatLabels; }
 	
-	
+	std::unordered_map<Stats::EquipSlots, std::shared_ptr<Equipment>>& GetEquippedItemsSlots() { return m_mapEquipmentSlots; }
+
+	Stats& GetStats() { return m_Stats; }
+
 	inline const bool IsDead() const { return m_bDead; }
 	inline const std::wstring& GetName() const { return m_sName; }
 	const int GetLevel() const { return m_Level; }
