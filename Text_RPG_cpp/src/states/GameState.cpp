@@ -35,14 +35,25 @@ void GameState::Update()
 
 void GameState::Draw()
 {
+	// Test to draw the player stats
 	const auto& name = m_TestPlayer->GetName();
 	std::wstring hp = std::to_wstring(m_TestPlayer->GetHP());
 	std::wstring max_hp = std::to_wstring(m_TestPlayer->GetMaxHP());
 	
-
 	m_Console.Write(50, 30, name, BLUE);
 	m_Console.Write(50, 32, L"HP: " + hp + L"/" + max_hp, BLUE);
 	
+	const auto& stats_list = m_TestPlayer->GetStats().GetStatList();
+	// Draw the player attributes
+	int i = 0;
+	for (const auto& [stat, value] : stats_list)
+	{
+		const auto& mod_value = m_TestPlayer->GetStats().GetModifier(stat);
+		m_Console.Write(50, 34 + i, stat + L":");
+		m_Console.Write(70, 34 + i, std::to_wstring(value + mod_value));
+		i++;
+	}
+
 	m_Selector.Draw();
 	m_Console.Draw();
 }
