@@ -1,4 +1,6 @@
 #include "Equipment.h"
+#include "Player.h"
+#include "Logger.h"
 
 Weapon::Weapon()
 	: Weapon(L"Weapon_Name", L"Weapon description", 0, 0)
@@ -20,12 +22,39 @@ Weapon::Weapon(const std::wstring& name, const std::wstring& description, int bu
 
 bool Weapon::OnEquip(Player& player)
 {
-	return false;
+	const auto& item_pwr = GetValue();
+	auto& player_stats = player.GetStats();
+	// Set the weapon pwr
+	player_stats.SetEquipmentValue(Stats::EquipSlots::WEAPON, item_pwr);
+	
+	const auto& stat_modifier = GetStatModifier();
+
+	if (stat_modifier.modifierType != StatModifier::ModifierType::NO_TYPE)
+		player_stats.SetModifier(stat_modifier.modifierTypeStr, stat_modifier.statModifierVal);
+
+	// Equip the item
+	Equip();
+
+	player_stats.UpdateStats();
+
+	return true;
 }
 
 bool Weapon::OnRemove(Player& player)
 {
-	return false;
+	auto& player_stats = player.GetStats();
+	player_stats.SetEquipmentValue(Stats::EquipSlots::WEAPON, 0);
+
+	const auto& stat_modifier = GetStatModifier();
+
+	if (stat_modifier.modifierType != StatModifier::ModifierType::NO_TYPE)
+		player_stats.SetModifier(stat_modifier.modifierTypeStr, 0);
+
+	Remove();
+
+	player_stats.UpdateStats();
+
+	return true;
 }
 
 Armor::Armor()
@@ -48,10 +77,79 @@ Armor::Armor(const std::wstring& name, const std::wstring& description, int buy_
 
 bool Armor::OnEquip(Player& player)
 {
-	return false;
+	const auto& item_pwr = GetValue();
+	auto& player_stats = player.GetStats();
+
+	Stats::EquipSlots slot = Stats::EquipSlots::NO_SLOT;
+	switch (m_ArmorProperties.armorType)
+	{
+	case ArmorProperties::ArmorType::HEADGEAR: 
+		slot = Stats::EquipSlots::HEADGEAR;
+		break;
+	case ArmorProperties::ArmorType::CHEST_BODY: 
+		slot = Stats::EquipSlots::CHEST_BODY;
+		break;
+	case ArmorProperties::ArmorType::FOOTWEAR: 
+		slot = Stats::EquipSlots::FOOTWEAR;
+		break;
+	case ArmorProperties::ArmorType::NOT_ARMOR: 
+		slot = Stats::EquipSlots::NO_SLOT;
+		return false;
+	default:
+		slot = Stats::EquipSlots::NO_SLOT;
+		return false;
+	}
+
+	// Get the stat modifier
+	const auto& stat_modifier = GetStatModifier();
+
+	if (stat_modifier.modifierType != StatModifier::ModifierType::NO_TYPE)
+		player_stats.SetModifier(stat_modifier.modifierTypeStr, stat_modifier.statModifierVal);
+
+	player_stats.SetEquipmentValue(slot, item_pwr);
+
+	Equip();
+
+	player_stats.UpdateStats();
+
+	return true;
 }
 
 bool Armor::OnRemove(Player& player)
 {
-	return false;
+	auto& player_stats = player.GetStats();
+
+	Stats::EquipSlots slot = Stats::EquipSlots::NO_SLOT;
+	switch (m_ArmorProperties.armorType)
+	{
+	case ArmorProperties::ArmorType::HEADGEAR:
+		slot = Stats::EquipSlots::HEADGEAR;
+		break;
+	case ArmorProperties::ArmorType::CHEST_BODY:
+		slot = Stats::EquipSlots::CHEST_BODY;
+		break;
+	case ArmorProperties::ArmorType::FOOTWEAR:
+		slot = Stats::EquipSlots::FOOTWEAR;
+		break;
+	case ArmorProperties::ArmorType::NOT_ARMOR:
+		slot = Stats::EquipSlots::NO_SLOT;
+		return false;
+	default:
+		slot = Stats::EquipSlots::NO_SLOT;
+		return false;
+	}
+
+	// Get the stat modifier
+	const auto& stat_modifier = GetStatModifier();
+
+	if (stat_modifier.modifierType != StatModifier::ModifierType::NO_TYPE)
+		player_stats.SetModifier(stat_modifier.modifierTypeStr, 0);
+
+	player_stats.SetEquipmentValue(slot, 0);
+
+	Remove();
+
+	player_stats.UpdateStats();
+
+	return true;
 }

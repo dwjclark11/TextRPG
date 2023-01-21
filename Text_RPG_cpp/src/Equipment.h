@@ -5,7 +5,7 @@ class Player;
 
 struct StatModifier
 {
-	enum class ModifierType { STRENGTH = 0, SPEED, INTELLIGENCE, DEXTERITY, ELEMENTAL, NO_TYPE };
+	enum class ModifierType { STRENGTH = 0, SPEED, INTELLIGENCE, DEXTERITY, STAMINA, ELEMENTAL, NO_TYPE };
 	enum class ElementalType { FIRE = 0, EARTH, WIND, ICE, WATER, LIGHTNING, NO_TYPE };
 
 	int statModifierVal;
@@ -31,6 +31,9 @@ struct StatModifier
 			break;
 		case StatModifier::ModifierType::DEXTERITY:
 			modifierTypeStr = L"Dexterity";
+			break;
+		case StatModifier::ModifierType::STAMINA:
+			modifierTypeStr = L"Stamina";
 			break;
 		case StatModifier::ModifierType::ELEMENTAL:
 			modifierTypeStr = L"Elemental";
