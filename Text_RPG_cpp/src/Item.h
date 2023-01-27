@@ -9,7 +9,7 @@ public: enum ItemType { HEALTH = 0, STATUS_AFFECT, REVIVE, BATTLE, KEY_ITEM, NO_
 private:
 	ItemType m_eItemType;
 protected:
-	int m_Count{ 1 };
+	int m_Count{ 1 }, m_BuyPrice{0}, m_SellPrice{0};
 	std::wstring m_sItemName{ L"Item_Name" };
 	std::wstring m_sDescription{ L"Item description goes here!" };
 
@@ -33,4 +33,6 @@ public:
 
 	const std::wstring& GetItemName() const { return m_sItemName; }
 	const std::wstring& GetDescription() const { return m_sDescription; }
+	const int GetBuyPrice() const { return m_BuyPrice; }
+	const int GetSellPrice() const { return m_SellPrice; }
 };
