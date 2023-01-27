@@ -227,12 +227,17 @@ inline void Selector<T>::Draw()
 				if (m_bShowCursor)
 				{
 					// Reset the areas behind the cursor as it moves
-					if (i != 0)
+					if (m_Params.m_CurrentY != 0)
 						m_Console.Write(x - (x == 0 ? 0 : 2), y - rowHeight, L" ");
 
-					m_Console.Write(x - (x == 0 ? 0 : 2), y + rowHeight, L" ");
-					m_Console.Write(x - (x == 0 ? 0 : 2) - spacingX, y, L" ");
-					m_Console.Write(x - (x == 0 ? 0 : 2) + spacingX, y, L" ");
+					if (m_Params.m_CurrentX != 0)
+						m_Console.Write(x - (x == 0 ? 0 : 2) - spacingX, y, L" ");
+
+					if (m_Params.m_CurrentY != m_Rows - 1)
+						m_Console.Write(x - (x == 0 ? 0 : 2), y + rowHeight, L" ");
+
+					if (m_Params.m_CurrentX != m_Params.m_Columns - 1)
+						m_Console.Write(x - (x == 0 ? 0 : 2) + spacingX, y, L" ");
 
 					// Draw the cursor
 					m_Console.Write(x - (x == 0 ? 0 : 2), y, m_Params.cursor, RED);
