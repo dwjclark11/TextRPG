@@ -18,7 +18,7 @@ private:
 	const std::vector<std::wstring> m_StatLabels {L"Attack", L"Strength", L"Intelligence", L"Speed", L"Dexterity", L"Stamina" };
 
 protected:
-	std::wstring m_sName;
+	std::wstring m_sName, m_sID;
 	int m_Level, m_XP, m_XPToNextLevel, m_HP, m_MaxHP;
 
 	bool m_bDead;
@@ -30,7 +30,7 @@ protected:
 
 public:
 	Actor();
-	Actor(const std::wstring& name, int level, int max_hp, ActorType type = ActorType::WARRIOR);
+	Actor(const std::wstring& name, const std::wstring& id, int level, int max_hp, ActorType type = ActorType::WARRIOR);
 
 	~Actor() = default;
 
@@ -50,6 +50,8 @@ public:
 
 	inline const bool IsDead() const { return m_bDead; }
 	inline const std::wstring& GetName() const { return m_sName; }
+	inline const std::wstring& GetID() const { return m_sID; }
+
 	const int GetLevel() const { return m_Level; }
 	const int GetXP() const { return m_XP; }
 	

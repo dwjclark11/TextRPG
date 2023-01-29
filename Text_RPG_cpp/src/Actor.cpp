@@ -1,13 +1,14 @@
 #include "Actor.h"
 
 Actor::Actor()
-	: Actor(L"Actor_name", 1, 100, ActorType::WARRIOR)
+	: Actor(L"Actor_name", L"Actor_ID", 1, 100, ActorType::WARRIOR)
 {
 
 }
 
-Actor::Actor(const std::wstring& name, int level, int max_hp, ActorType type)
+Actor::Actor(const std::wstring& name, const std::wstring& id, int level, int max_hp, ActorType type)
 	: m_sName{ name }
+	, m_sID{id}
 	, m_Level{level}
 	, m_XP{0}
 	, m_XPToNextLevel{ 250 }
@@ -25,7 +26,7 @@ Actor::Actor(const std::wstring& name, int level, int max_hp, ActorType type)
 	, m_Stats{10, 3, 5, 5, 7} // TEST STATS
 	
 {
-
+	
 }
 
 void Actor::HealHP(int hp)
