@@ -9,8 +9,9 @@ GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMa
 	, m_Keyboard(keyboard)
 	, m_StateMachine(stateMachine)
 	, m_Selector(console, keyboard, {L"Start", L"Settings", L"Exit"})
+	, m_TestInventory{} // TEST TO BE REMOVED
 {
-	m_TestPlayer = std::make_unique<Player>(L"Test Player", 1, 200);
+	m_TestPlayer = std::make_unique<Player>(L"Test Player", L"test_player", m_TestInventory, 1, 200);
 }
 
 GameState::~GameState()
