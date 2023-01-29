@@ -2,6 +2,7 @@
 #include "IState.h"
 #include "../Selector.h"
 #include "../Player.h"
+#include "../Party.h"
 #include "../Inventory.h"
 #include <memory>
 
@@ -17,8 +18,8 @@ private:
 	StateMachine& m_StateMachine;
 
 	Selector<> m_Selector;
-	std::unique_ptr<Player> m_TestPlayer;
-	Inventory m_TestInventory;
+	std::unique_ptr<Party> m_Party;
+	
 public:
 	GameState(Console& console, Keyboard& keyboard, StateMachine& stateMachine);
 	~GameState();
