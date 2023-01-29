@@ -72,6 +72,8 @@ class Equipment
 public: enum class EquipType { WEAPON = 0, ARMOR, ACCESSORY, NO_TYPE };
 
 private:
+	const int MAX_COUNT = 50;
+
 	Equipment::EquipType m_eEquipType{ EquipType::NO_TYPE };
 protected:
 	std::wstring m_sName{ L"" }, m_sDescription{ L"" };
@@ -93,7 +95,13 @@ public:
 	inline const bool IsEquipped() const { return m_bEquipped; }
 	inline const std::wstring& GetName() const { return m_sName; }
 	inline const std::wstring& GetDescription() const { return m_sDescription; }
-	inline void Add(int num) { m_Count += num; }
+	inline bool Add(int num) {
+		if (m_Count + num > MAX_COUNT)
+			return false;
+
+		m_Count += num; 
+		return true;
+	}
 	inline const int GetCount() const { return m_Count; }
 	inline const Equipment::EquipType GetType() const { return m_eEquipType; }
 	inline const WeaponProperties& GetWeaponProperties() const { return m_WeaponProperties; }
