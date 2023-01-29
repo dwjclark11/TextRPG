@@ -19,7 +19,7 @@ public:
 	const std::vector<std::shared_ptr<Item>>& GetItems() { return m_Items; }
 	const std::vector<std::shared_ptr<Equipment>>& GetEquipment() { return m_Equipment; }
 
-	void AddItem(std::shared_ptr<Item> newItem);
-	void AddEquipment(std::shared_ptr<Equipment> newEquipment);
-	void UseItem(int index, Player& player);
+	bool AddItem(std::shared_ptr<Item> newItem);
+	bool AddEquipment(std::shared_ptr<Equipment> newEquipment);
+	bool UseItem(int index, Player& player);
 };
