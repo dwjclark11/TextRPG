@@ -16,18 +16,10 @@ struct SelectorParams
 	std::wstring cursor;
 
 	SelectorParams(
-		int x = 20, int y = 10, int columns = 1, int current_x = 0, int current_y = 0,
+		int x = 20, int y = 10, int columns = 1,
 		int spacing_x = 20, int spacing_y = 5, std::wstring cursor = L"->"
-	)
+	) : x{x}, y{y}, columns{columns}, currentX{0}, currentY{0}, spacingX{spacing_x}, spacingY{spacing_y}, cursor{cursor}
 	{
-		this->x = x;
-		this->y = y;
-		this->columns = columns;
-		this->currentX = current_x;
-		this->currentY = current_y;
-		this->spacingX = spacing_x;
-		this->spacingY = spacing_y;
-		this->cursor = cursor;
 	}
 };
 
