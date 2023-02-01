@@ -10,7 +10,7 @@ private:
 	const int MAX_COUNT = 99;
 	ItemType m_eItemType;
 protected:
-	int m_Count{ 1 }, m_BuyPrice{0}, m_SellPrice{0};
+	int m_Count{ 1 }, m_BuyPrice{0}, m_SellPrice{0}, m_ItemValue{0};
 	std::wstring m_sItemName{ L"Item_Name" };
 	std::wstring m_sDescription{ L"Item description goes here!" };
 
