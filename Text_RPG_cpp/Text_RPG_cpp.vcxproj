@@ -139,6 +139,7 @@
     <ClCompile Include="src\Party.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Potion.cpp" />
+    <ClCompile Include="src\states\GameMenuState.cpp" />
     <ClCompile Include="src\states\GameState.cpp" />
     <ClCompile Include="src\states\StateMachine.cpp" />
     <ClCompile Include="src\Stats.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Potion.h" />
     <ClInclude Include="src\Selector.h" />
+    <ClInclude Include="src\states\GameMenuState.h" />
     <ClInclude Include="src\states\GameState.h" />
     <ClInclude Include="src\states\IState.h" />
     <ClInclude Include="src\states\StateMachine.h" />

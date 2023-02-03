@@ -5,6 +5,7 @@
 #include "../inputs/Keyboard.h"
 #include "../Potion.h"
 #include "../utilities/ItemCreator.h"
+#include "GameMenuState.h"
 
 GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMachine)
 	: m_Console(console)
@@ -96,6 +97,12 @@ void GameState::ProcessInputs()
 	if (m_Keyboard.IsKeyJustPressed(KEY_ESCAPE))
 	{
 		m_StateMachine.PopState();
+		return;
+	}
+
+	if (m_Keyboard.IsKeyJustPressed(KEY_M))
+	{
+		m_StateMachine.PushState(std::make_unique<GameMenuState>(*m_Party, m_Console, m_StateMachine, m_Keyboard));
 		return;
 	}
 
