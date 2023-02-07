@@ -10,7 +10,9 @@ private:
 	const int SCREEN_HEIGHT = 48;
 
 	const int BUFFER_SIZE = SCREEN_WIDTH * SCREEN_HEIGHT;
-	
+	const int HALF_WIDTH = SCREEN_WIDTH / 2;
+	const int HALF_HEIGHT = SCREEN_HEIGHT / 2;
+
 	HANDLE m_hConsole;
 	HWND m_hConsoleWindow;
 	RECT m_ConsoleWindowRect;
@@ -24,6 +26,11 @@ private:
 public:
 	Console();
 	~Console();
+
+	const int GetScreenWidth() const { return SCREEN_WIDTH; }
+	const int GetScreenHeight() const { return SCREEN_HEIGHT; }
+	const int GetHalfWidth() const { return HALF_WIDTH; }
+	const int GetHalfHeight() const { return HALF_HEIGHT; }
 
 	void ClearBuffer();
 	void Write(int x, int y, const std::wstring& text, WORD color = WHITE);

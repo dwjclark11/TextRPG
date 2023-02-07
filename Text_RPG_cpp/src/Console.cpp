@@ -160,7 +160,7 @@ void Console::DrawPanelVert(int x, int y, size_t height, WORD color, const std::
 void Console::DrawPanel(int x, int y, size_t width, size_t height, WORD color, const std::wstring& width_char, const std::wstring& height_char)
 {
 	DrawPanelHorz(x, y, width, color, width_char);
-	DrawPanelHorz(x, height, width, color, width_char);
+	DrawPanelHorz(x, y + height, width, color, width_char);
 
 	DrawPanelVert(x, y + 1, height - 1, color, height_char);
 	DrawPanelVert(x + width - 1, y + 1, height -1, color, height_char);
