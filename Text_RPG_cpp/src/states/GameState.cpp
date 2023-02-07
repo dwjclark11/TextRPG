@@ -39,7 +39,9 @@ GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMa
 	m_Party->GetInventory().AddEquipment(std::move(chest_armor));
 
 	auto player = std::make_shared<Player>(L"Test Player", L"test_player", m_Party->GetInventory(), 1, 200);
+	auto Dustin = std::make_shared<Player>(L"Dustin", L"warrior", m_Party->GetInventory(), 1, 200);
 	m_Party->AddMember(std::move(player));
+	m_Party->AddMember(std::move(Dustin));
 }
 
 GameState::~GameState()
