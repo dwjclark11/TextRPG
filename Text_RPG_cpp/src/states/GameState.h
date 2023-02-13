@@ -5,6 +5,7 @@
 #include "../Party.h"
 #include "../Inventory.h"
 #include <memory>
+#include "../utilities/Timer.h"
 
 class Console;
 class Keyboard;
@@ -19,7 +20,8 @@ private:
 
 	Selector<> m_Selector;
 	std::unique_ptr<Party> m_Party;
-	
+	Timer m_Timer;
+
 public:
 	GameState(Console& console, Keyboard& keyboard, StateMachine& stateMachine);
 	~GameState();

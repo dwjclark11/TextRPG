@@ -143,6 +143,7 @@
     <ClCompile Include="src\states\GameState.cpp" />
     <ClCompile Include="src\states\StateMachine.cpp" />
     <ClCompile Include="src\Stats.cpp" />
+    <ClCompile Include="src\utilities\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Party.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="src\Stats.h" />
     <ClInclude Include="src\utilities\Colors.h" />
     <ClInclude Include="src\utilities\ItemCreator.h" />
+    <ClInclude Include="src\utilities\Timer.h" />
     <ClInclude Include="src\utilities\trpg_utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

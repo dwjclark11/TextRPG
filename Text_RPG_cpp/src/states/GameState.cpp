@@ -13,6 +13,7 @@ GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMa
 	, m_StateMachine(stateMachine)
 	, m_Selector(console, keyboard, {L"Start", L"Settings", L"Exit"})
 	, m_Party{nullptr}
+	, m_Timer{}
 {
 	m_Party = std::make_unique<Party>();
 
@@ -66,29 +67,12 @@ void GameState::Update()
 
 void GameState::Draw()
 {
-	// Test to draw the player stats
-	for (const auto& member : m_Party->GetParty())
-	{
-
-		const auto& name = member->GetName();
-		std::wstring hp = std::to_wstring(member->GetHP());
-		std::wstring max_hp = std::to_wstring(member->GetMaxHP());
-
-		m_Console.Write(50, 30, name, BLUE);
-		m_Console.Write(50, 32, L"HP: " + hp + L"/" + max_hp, BLUE);
-
-		const auto& stats_list = member->GetStats().GetStatList();
-		// Draw the player attributes
-		int i = 0;
-		for (const auto& [stat, value] : stats_list)
-		{
-			const auto& mod_value = member->GetStats().GetModifier(stat);
-			m_Console.Write(50, 34 + i, stat + L":");
-			m_Console.Write(70, 34 + i, std::to_wstring(value + mod_value));
-			i++;
-		}
-	}
 	
+	std::wstring time_ms = L"MS: " + std::to_wstring(m_Timer.ElapsedMS());
+	std::wstring time_sec = L"SEC: " + std::to_wstring(m_Timer.ElapsedSec());
+
+	m_Console.Write(25, 25, time_ms, RED);
+	m_Console.Write(25, 26, time_sec, RED);
 
 	m_Selector.Draw();
 	m_Console.Draw();
@@ -106,6 +90,24 @@ void GameState::ProcessInputs()
 	{
 		m_StateMachine.PushState(std::make_unique<GameMenuState>(*m_Party, m_Console, m_StateMachine, m_Keyboard));
 		return;
+	}
+
+	if (m_Keyboard.IsKeyJustPressed(KEY_ENTER))
+	{
+		m_Timer.Start();
+	}
+	else if (m_Keyboard.IsKeyJustPressed(KEY_P))
+	{
+		m_Timer.Pause();
+	}
+	else if (m_Keyboard.IsKeyJustPressed(KEY_R))
+	{
+		m_Timer.Resume();
+	}
+	else if (m_Keyboard.IsKeyJustPressed(KEY_T))
+	{
+		m_Timer.Stop();
+		m_Console.ClearBuffer();
 	}
 
 	m_Selector.ProcessInputs();
