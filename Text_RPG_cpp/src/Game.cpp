@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Logger.h"
 #include "states/GameState.h"
+#include "utilities/Globals.h"
 
 bool Game::Init()
 {
@@ -88,6 +89,8 @@ void Game::Update()
 
 	m_pStateMachine->GetCurrentState()->Update();
 	m_pKeyboard->Update();
+
+	TRPG_Globals::GetInstance().Update();
 }
 
 void Game::Draw()
