@@ -4,12 +4,35 @@
 #include "../Console.h"
 #include "../inputs/Keyboard.h"
 #include "StateMachine.h"
+#include "../utilities/Globals.h"
 
 using namespace std::placeholders;
 
 void GameMenuState::DrawPanels()
 {
+	// Draw Opening Bar
+	m_Console.DrawPanelHorz(m_PanelBarX - 1, 1, PANEL_BARS + 2, BLUE);
+	int menu_x_pos = m_CenterScreenW - (MENU_SIZE / 2);
+	m_Console.Write(menu_x_pos, 2, L" __  __                  ", GREEN);
+	m_Console.Write(menu_x_pos, 3, L"|  \\/  | ___ _ __  _   _ ", GREEN);
+	m_Console.Write(menu_x_pos, 4, L"| |\\/| |/ _ \\ '_ \\| | | |", GREEN);
+	m_Console.Write(menu_x_pos, 5, L"| |  | |  __/ | | | |_| |", GREEN);
+	m_Console.Write(menu_x_pos, 6, L"|_|  |_|\\___|_| |_|\\__,_|", GREEN);
+	m_Console.DrawPanelHorz(18, 7, PANEL_BARS, BLUE);
 
+	m_Console.DrawPanelHorz(m_PanelBarX - 1, 34, SMALL_PANEL_BAR, BLUE);
+	// Draw Closing Bar
+	m_Console.DrawPanelHorz(m_PanelBarX - 1, (m_ScreenHeight - 2), PANEL_BARS + 2, BLUE);
+
+	// Draw Right bar
+	m_Console.DrawPanelVert(m_PanelBarX - 1, 2, 44, BLUE);
+	m_Console.DrawPanelVert(m_PanelBarX + PANEL_BARS, 2, 44, BLUE);
+	m_Console.DrawPanelVert(48, 8, 38, BLUE);
+
+
+	// Draw the game time
+	const auto& time_str = L"TIME: " + TRPG_Globals::GetInstance().GetTime();
+	m_Console.Write(26, 38, time_str);
 }
 
 void GameMenuState::DrawPlayerInfo()
