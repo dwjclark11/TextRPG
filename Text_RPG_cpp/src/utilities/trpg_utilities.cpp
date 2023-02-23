@@ -20,3 +20,19 @@ std::wstring PadNumbers(int num)
 
     return std::to_wstring(num);
 }
+
+Item::ItemType ItemTypeFromString(const std::string& item_type)
+{
+    if (item_type == "Health")
+        return Item::ItemType::HEALTH;
+    else if (item_type == "Revive")
+        return Item::ItemType::REVIVE;
+    else if (item_type == "StatusAffect")
+        return Item::ItemType::STATUS_AFFECT;
+    else if (item_type == "Battle")
+        return Item::ItemType::BATTLE;
+    else if (item_type == "KeyItem")
+        return Item::ItemType::KEY_ITEM;
+    else
+        return Item::ItemType::NO_TYPE;
+}

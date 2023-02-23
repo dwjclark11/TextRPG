@@ -70,6 +70,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)\Text_RPG_cpp\libs\tinyxml2;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)\Text_RPG_cpp\libs\tinyxml2;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -128,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="libs\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="src\Actor.cpp" />
     <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\Equipment.cpp" />
@@ -144,10 +151,12 @@
     <ClCompile Include="src\states\StateMachine.cpp" />
     <ClCompile Include="src\Stats.cpp" />
     <ClCompile Include="src\utilities\Globals.cpp" />
+    <ClCompile Include="src\utilities\ItemLoader.cpp" />
     <ClCompile Include="src\utilities\Timer.cpp" />
     <ClCompile Include="src\utilities\trpg_utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="libs\tinyxml2\tinyxml2.h" />
     <ClInclude Include="src\Party.h" />
     <ClInclude Include="src\Actor.h" />
     <ClInclude Include="src\Console.h" />
@@ -170,8 +179,16 @@
     <ClInclude Include="src\utilities\Colors.h" />
     <ClInclude Include="src\utilities\Globals.h" />
     <ClInclude Include="src\utilities\ItemCreator.h" />
+    <ClInclude Include="src\utilities\ItemLoader.h" />
+    <ClInclude Include="src\utilities\Parser.h" />
     <ClInclude Include="src\utilities\Timer.h" />
     <ClInclude Include="src\utilities\trpg_utilities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="libs\tinyxml2\LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="assets\xml_files\ItemDefs.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

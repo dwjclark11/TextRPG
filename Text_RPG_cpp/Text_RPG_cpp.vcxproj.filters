@@ -69,6 +69,12 @@
     <ClCompile Include="src\utilities\trpg_utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="libs\tinyxml2\tinyxml2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utilities\ItemLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -143,5 +149,20 @@
     <ClInclude Include="src\utilities\Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="libs\tinyxml2\tinyxml2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utilities\Parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utilities\ItemLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="libs\tinyxml2\LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="assets\xml_files\ItemDefs.xml" />
   </ItemGroup>
 </Project>

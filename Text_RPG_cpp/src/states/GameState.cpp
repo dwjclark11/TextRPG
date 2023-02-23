@@ -6,6 +6,8 @@
 #include "../Potion.h"
 #include "../utilities/ItemCreator.h"
 #include "GameMenuState.h"
+#include "../utilities/ItemLoader.h"
+#include <cassert>
 
 GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMachine)
 	: m_Console(console)
@@ -53,6 +55,9 @@ GameState::~GameState()
 void GameState::OnEnter()
 {
 	m_Console.ClearBuffer();
+	ItemLoader il{ "./assets/xml_files/ItemDefs.xml" };
+	auto item = il.CreateObjectFromFile("Potion");
+	assert(item);
 }
 
 void GameState::OnExit()
