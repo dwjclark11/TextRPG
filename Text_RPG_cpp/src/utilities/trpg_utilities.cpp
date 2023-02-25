@@ -36,3 +36,78 @@ Item::ItemType ItemTypeFromString(const std::string& item_type)
     else
         return Item::ItemType::NO_TYPE;
 }
+
+Equipment::EquipType EquipTypeFromString(const std::string& equip_type)
+{
+    if (equip_type == "Weapon")
+        return Equipment::EquipType::WEAPON;
+    else if (equip_type == "Armor")
+        return Equipment::EquipType::ARMOR;
+    else if (equip_type == "Accessory")
+        return Equipment::EquipType::ACCESSORY;
+    else 
+        return Equipment::EquipType::NO_TYPE;
+}
+
+WeaponProperties::WeaponType WeaponTypeFromString(const std::string& weapon_type)
+{
+    if (weapon_type == "Sword")
+        return WeaponProperties::WeaponType::SWORD;
+    else if (weapon_type == "Dagger")
+        return WeaponProperties::WeaponType::DAGGER;
+    else if (weapon_type == "Bow")
+        return WeaponProperties::WeaponType::BOW;
+    else if (weapon_type == "Staff")
+        return WeaponProperties::WeaponType::STAFF;
+    else 
+        return WeaponProperties::WeaponType::NOT_A_WEAPON;
+}
+
+ArmorProperties::ArmorType ArmorTypeFromString(const std::string& armor_type)
+{
+    if (armor_type == "Headgear")
+        return ArmorProperties::ArmorType::HEADGEAR;
+    else if (armor_type == "Chest")
+        return ArmorProperties::ArmorType::CHEST_BODY;
+    else if (armor_type == "Footwear")
+        return ArmorProperties::ArmorType::FOOTWEAR;
+    else 
+        return ArmorProperties::ArmorType::NOT_ARMOR;
+}
+
+StatModifier::ModifierType ModifierTypeFromString(const std::string& mod_type)
+{
+    if (mod_type == "Strength")
+        return StatModifier::ModifierType::STRENGTH;
+    else if (mod_type == "Intelligence")
+        return StatModifier::ModifierType::INTELLIGENCE;
+    else if (mod_type == "Dexterity")
+        return StatModifier::ModifierType::DEXTERITY;
+    else if (mod_type == "Speed")
+        return StatModifier::ModifierType::SPEED;
+    else if (mod_type == "Stamina")
+        return StatModifier::ModifierType::STAMINA;
+    else if (mod_type == "Elemental")
+        return StatModifier::ModifierType::ELEMENTAL;
+    else 
+        return StatModifier::ModifierType::NO_TYPE;
+
+}
+
+StatModifier::ElementalType ElementalTypeFromString(const std::string& elemental_type)
+{
+    if (elemental_type == "Fire")
+        return StatModifier::ElementalType::FIRE;
+    else if (elemental_type == "Earth")
+        return StatModifier::ElementalType::EARTH;
+    else if (elemental_type == "Wind")
+        return StatModifier::ElementalType::WIND;
+    else if (elemental_type == "Water")
+        return StatModifier::ElementalType::WATER;
+    else if (elemental_type == "Ice")
+        return StatModifier::ElementalType::ICE;
+    else if (elemental_type == "Lightning")
+        return StatModifier::ElementalType::LIGHTNING;
+    else 
+        return StatModifier::ElementalType::NO_TYPE;
+}

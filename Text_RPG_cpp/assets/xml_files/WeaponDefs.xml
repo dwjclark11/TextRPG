@@ -1,0 +1,31 @@
+<WeaponDefs>
+  <Weapons>
+
+    <Weapon>
+      <Name>Iron Sword</Name>
+      <Description>Durable sword made of iron</Description>
+      <Type>Weapon</Type>
+      <BuyPrice>300</BuyPrice>
+      <WeaponProperties>
+        <AttackPwr>20</AttackPwr>
+        <WeaponType>Sword</WeaponType>
+      </WeaponProperties>
+      <StatModifier>
+        <ModValue>5</ModValue>
+        <ModType>Strength</ModType>
+      </StatModifier>
+    </Weapon>
+
+    <Weapon>
+      <Name>Broad Sword</Name>
+      <Description>Heavy sword</Description>
+      <Type>Weapon</Type>
+      <BuyPrice>500</BuyPrice>
+      <WeaponProperties>
+        <AttackPwr>25</AttackPwr>
+        <WeaponType>Sword</WeaponType>
+      </WeaponProperties>
+    </Weapon>
+    
+  </Weapons>
+</WeaponDefs>
