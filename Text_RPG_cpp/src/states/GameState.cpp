@@ -7,6 +7,7 @@
 #include "../utilities/ItemCreator.h"
 #include "GameMenuState.h"
 #include "../utilities/ItemLoader.h"
+#include "../utilities/EquipmentLoader.h"
 #include <cassert>
 
 GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMachine)
@@ -27,14 +28,14 @@ GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMa
 		WeaponProperties(15, WeaponProperties::WeaponType::SWORD),
 		ArmorProperties(),
 		StatModifier(3, StatModifier::ModifierType::STRENGTH),
-		L"Short Sword", L"A small sword of shabby material", 100, 50
+		L"Short Sword", L"A small sword of shabby material", 10
 	);
 
 	auto chest_armor = ItemCreator::CreateEquipment(Equipment::EquipType::ARMOR,
 		WeaponProperties(),
 		ArmorProperties(10, ArmorProperties::ArmorType::CHEST_BODY),
 		StatModifier(3, StatModifier::ModifierType::STRENGTH),
-		L"Chest Plate", L"A sturdy chest plate made of iron", 100, 50
+		L"Chest Plate", L"A sturdy chest plate made of iron", 100
 	);
 
 
@@ -55,9 +56,9 @@ GameState::~GameState()
 void GameState::OnEnter()
 {
 	m_Console.ClearBuffer();
-	ItemLoader il{ "./assets/xml_files/ItemDefs.xml" };
-	auto item = il.CreateObjectFromFile("Potion");
-	assert(item);
+	EquipmentLoader el{ "./assets/xml_files/ArmorDefs.xml", false };
+	auto equipment = el.CreateObjectFromFile("Leather Shirt");
+	assert(equipment);
 }
 
 void GameState::OnExit()

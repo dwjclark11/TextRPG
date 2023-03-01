@@ -113,7 +113,7 @@ class Weapon : public Equipment
 {
 public:
 	Weapon();
-	Weapon(const std::wstring& name, const std::wstring& description, int buy_price, int sell_price, WeaponProperties weapon_properties = WeaponProperties(), StatModifier stat_modifier = StatModifier());
+	Weapon(const std::wstring& name, const std::wstring& description, int buy_price, WeaponProperties weapon_properties = WeaponProperties(), StatModifier stat_modifier = StatModifier());
 	~Weapon() = default;
 
 	inline const int GetValue() const override { return m_WeaponProperties.attackPwr; }
@@ -125,7 +125,7 @@ class Armor: public Equipment
 {
 public:
 	Armor();
-	Armor(const std::wstring& name, const std::wstring& description, int buy_price, int sell_price, ArmorProperties armor_properties = ArmorProperties(), StatModifier stat_modifier = StatModifier());
+	Armor(const std::wstring& name, const std::wstring& description, int buy_price, ArmorProperties armor_properties = ArmorProperties(), StatModifier stat_modifier = StatModifier());
 	~Armor() = default;
 
 	inline const int GetValue() const override { return m_ArmorProperties.defensePwr; }

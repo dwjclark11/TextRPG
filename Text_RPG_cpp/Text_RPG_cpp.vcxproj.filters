@@ -75,6 +75,9 @@
     <ClCompile Include="src\utilities\ItemLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utilities\EquipmentLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -158,11 +161,16 @@
     <ClInclude Include="src\utilities\ItemLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\utilities\EquipmentLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="libs\tinyxml2\LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="assets\xml_files\ItemDefs.xml" />
+    <Xml Include="assets\xml_files\WeaponDefs.xml" />
+    <Xml Include="assets\xml_files\ArmorDefs.xml" />
   </ItemGroup>
 </Project>

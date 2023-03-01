@@ -8,12 +8,12 @@ Weapon::Weapon()
 
 }
 
-Weapon::Weapon(const std::wstring& name, const std::wstring& description, int buy_price, int sell_price, WeaponProperties weapon_properties, StatModifier stat_modifier)
+Weapon::Weapon(const std::wstring& name, const std::wstring& description, int buy_price, WeaponProperties weapon_properties, StatModifier stat_modifier)
 {
 	m_sName = name;
 	m_sDescription = description;
 	m_BuyPrice = buy_price;
-	m_SellPrice = sell_price;
+	m_SellPrice = buy_price / 2;
 	m_StatModifier = stat_modifier;
 	SetEquipType(EquipType::WEAPON);
 	m_WeaponProperties = weapon_properties;
@@ -63,12 +63,12 @@ Armor::Armor()
 
 }
 
-Armor::Armor(const std::wstring& name, const std::wstring& description, int buy_price, int sell_price, ArmorProperties armor_properties, StatModifier stat_modifier)
+Armor::Armor(const std::wstring& name, const std::wstring& description, int buy_price, ArmorProperties armor_properties, StatModifier stat_modifier)
 {
 	m_sName = name;
 	m_sDescription = description;
 	m_BuyPrice = buy_price;
-	m_SellPrice = sell_price;
+	m_SellPrice = buy_price / 2;
 	m_StatModifier = stat_modifier;
 	SetEquipType(EquipType::ARMOR);
 	m_WeaponProperties = WeaponProperties();
