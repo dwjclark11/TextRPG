@@ -18,5 +18,5 @@ public:
 	const int GetGameTime() const { return m_GameTime; }
 	void SetSaveGameTime(int saved_time) { m_SavedGameTime = saved_time; }
 	void Update();
-	const std::wstring GetTime();
+	[[nodiscard]] const std::wstring GetTime();
 };

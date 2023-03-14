@@ -12,7 +12,8 @@ Actor::Actor(const std::wstring& name, const std::wstring& id, int level, int ma
 	, m_Level{level}
 	, m_XP{0}
 	, m_XPToNextLevel{ 250 }
-	, m_HP{max_hp}
+	//, m_HP{max_hp}
+	, m_HP{1}
 	, m_MaxHP{max_hp}
 	, m_bDead{false}
 	, m_eActorType{type}
