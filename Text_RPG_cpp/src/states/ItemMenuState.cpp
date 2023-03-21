@@ -107,7 +107,7 @@ void ItemState::OnItemSelect(int index, std::vector<std::shared_ptr<Item>> data)
 	if (item_count <= 0)
 	{
 		remove(data, index); 
-		//m_ItemSelector.SetData(items.GetItems());
+		m_ItemSelector.SetData(items.GetItems());
 
 		// Clear the buffer
 		m_Console.ClearBuffer();
@@ -117,11 +117,19 @@ void ItemState::OnItemSelect(int index, std::vector<std::shared_ptr<Item>> data)
 void ItemState::RenderItem(int x, int y, std::shared_ptr<Item> item)
 {
 	int index = m_ItemSelector.GetIndex();
+	static int prevIndex = 0;
 	const auto& data = m_ItemSelector.GetData();
 
 	const std::wstring& item_name = item->GetItemName();
 	m_Console.Write(x, y, item_name);
 	m_Console.Write(x + static_cast<int>(item_name.size() + 1), y, std::to_wstring(item->GetCount()));
+
+	if (index != prevIndex)
+	{
+		// Clear the description area 
+		m_Console.DrawPanelHorz(m_PanelBarX, 12, PANEL_BARS, BLUE, L" ");
+		prevIndex = index;
+	}
 
 	if (index < data.size())
 	{
@@ -142,7 +150,7 @@ ItemState::ItemState(Player& player, Console& console, StateMachine& stateMachin
 	, m_MenuSelector{
 		console, keyboard,
 		{L"Items", L"Key Items"},
-		SelectorParams{40, 10, 2, 25, 0}
+		SelectorParams{50, 10, 2, 25, 0}
 }
 	, m_ItemSelector{
 		console, keyboard,

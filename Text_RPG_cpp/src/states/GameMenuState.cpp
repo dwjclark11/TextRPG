@@ -1,5 +1,6 @@
 #include "GameMenuState.h"
 #include "ItemMenuState.h"
+#include "EquipmentMenuState.h"
 
 #include "../Party.h"
 #include "../Player.h"
@@ -118,7 +119,7 @@ void GameMenuState::OnPlayerSelect(int index, std::vector<std::shared_ptr<Player
 		// TODO: Create new MAGIC State
 		break;
 	case SelectType::EQUIPMENT:
-		// TODO: Create new Equipment State
+		m_StateMachine.PushState(std::make_unique<EquipmentMenuState>(*player, m_Console, m_StateMachine, m_Keyboard));
 		break;
 	case SelectType::STATS:
 		// TODO: Create new Stats State
