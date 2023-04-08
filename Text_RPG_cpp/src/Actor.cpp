@@ -12,9 +12,8 @@ Actor::Actor(const std::wstring& name, const std::wstring& id, int level, int ma
 	, m_Level{level}
 	, m_XP{0}
 	, m_XPToNextLevel{ 250 }
-	//, m_HP{max_hp}
-	, m_HP{1}
-	, m_MaxHP{max_hp}
+	, m_HP{max_hp}
+	, m_MaxHP{max_hp}, m_MP{5}, m_MaxMP{5}
 	, m_bDead{false}
 	, m_eActorType{type}
 	, m_mapEquipmentSlots{
@@ -46,4 +45,17 @@ void Actor::TakeDamage(int damage)
 		m_HP = 0;
 		m_bDead = true;
 	}
+}
+
+bool Actor::UseMP(int mp)
+{
+	if (mp > m_MP)
+		return false;
+
+	m_MP -= mp;
+
+	if (m_MP <= 0)
+		m_MP = 0;
+
+	return true;
 }

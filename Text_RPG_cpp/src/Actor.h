@@ -20,6 +20,7 @@ private:
 protected:
 	std::wstring m_sName, m_sID;
 	int m_Level, m_XP, m_XPToNextLevel, m_HP, m_MaxHP;
+	int m_MP, m_MaxMP;
 
 	bool m_bDead;
 	ActorType m_eActorType;
@@ -54,6 +55,8 @@ public:
 
 	const int GetLevel() const { return m_Level; }
 	const int GetXP() const { return m_XP; }
+	const int GetMP() const { return m_MP; }
+	const int GetMaxMP() const { return m_MaxMP; }
 	
 	/*
 	* @return This returns the amount of XP required for leveling up as an integer value.
@@ -74,4 +77,6 @@ public:
 	* to zero and sets the dead flag.
 	*/
 	void TakeDamage(int damage);
+
+	bool UseMP(int mp);
 };
