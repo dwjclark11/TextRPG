@@ -25,6 +25,7 @@ void EquipmentMenuState::DrawEquipment()
 
 	// Player holder
 	m_Console.DrawPanelHorz(m_PanelBarX - 1, (m_ScreenHeight - 15), PANEL_BARS + 2, YELLOW);
+	m_Console.DrawPanelHorz(m_PanelBarX - 1, (m_ScreenHeight - 17), PANEL_BARS + 2, YELLOW);
 	// Draw Closing Bar
 	m_Console.DrawPanelHorz(m_PanelBarX - 1, (m_ScreenHeight - 2), PANEL_BARS + 2, YELLOW);
 
@@ -66,6 +67,7 @@ void EquipmentMenuState::DrawStatPrediction()
 	const auto& index = m_EquipmentSelector.GetIndex();
 	if (index > data.size() - 1)
 	{
+		m_Console.Write(75, m_DiffPosY, L"    ");
 		return;
 	}
 
@@ -106,7 +108,7 @@ void EquipmentMenuState::DrawStatPrediction()
 
 void EquipmentMenuState::DrawStatModifier(int x, int y, const std::wstring& stat, int value)
 {
-	if (m_bInSlotSelect)
+	if (m_bInSlotSelect || m_bInMenuSelect)
 		return;
 
 	const auto& data = m_EquipmentSelector.GetData();
@@ -238,7 +240,7 @@ void EquipmentMenuState::OnSlotSelect(int index, std::vector<std::wstring> data)
 
 	Equipment::EquipType equipType = Equipment::EquipType::NO_TYPE;
 	ArmorProperties::ArmorType armor_type = ArmorProperties::ArmorType::NOT_ARMOR;
-
+	int statPos = 0;
 	if (slot_name == L"Weapon")
 	{
 		m_eEquipSlots = Stats::EquipSlots::WEAPON;
@@ -249,20 +251,23 @@ void EquipmentMenuState::OnSlotSelect(int index, std::vector<std::wstring> data)
 		m_eEquipSlots = Stats::EquipSlots::HEADGEAR;
 		equipType = Equipment::EquipType::ARMOR;
 		armor_type = ArmorProperties::ArmorType::HEADGEAR;
+		statPos = 1;
 	}
 	else if (slot_name == L"Armor")
 	{
 		m_eEquipSlots = Stats::EquipSlots::CHEST_BODY;
 		equipType = Equipment::EquipType::ARMOR;
 		armor_type = ArmorProperties::ArmorType::CHEST_BODY;
+		statPos = 1;
 	}
 	else if (slot_name == L"Footwear")
 	{
 		m_eEquipSlots = Stats::EquipSlots::FOOTWEAR;
 		equipType = Equipment::EquipType::ARMOR;
 		armor_type = ArmorProperties::ArmorType::FOOTWEAR;
+		statPos = 1;
 	}
-	else if (slot_name == L"Accessories")
+	else if (slot_name == L"Accessory")
 	{
 		m_eEquipSlots = Stats::EquipSlots::ACCESSORY;
 		equipType = Equipment::EquipType::ARMOR;
@@ -295,7 +300,7 @@ void EquipmentMenuState::OnSlotSelect(int index, std::vector<std::wstring> data)
 
 	m_EquipmentSelector.SetData(selectedEquipment);
 
-	m_DiffPosY = STAT_LABEL_START_Y_POS + index;
+	m_DiffPosY = STAT_LABEL_START_Y_POS + statPos;
 	m_sCurrentSlot = slot_name;
 	m_EquipSlotSelector.HideCursor();
 	m_EquipmentSelector.ShowCursor();
@@ -304,12 +309,94 @@ void EquipmentMenuState::OnSlotSelect(int index, std::vector<std::wstring> data)
 
 void EquipmentMenuState::RenderEquip(int x, int y, std::shared_ptr<Equipment> item)
 {
+	if (item->IsEquipped())
+		return;
 
+	switch (item->GetType())
+	{
+	case Equipment::EquipType::ARMOR:
+		if (item->GetArmorProperties().armorType == ArmorProperties::ArmorType::HEADGEAR && m_eEquipSlots != Stats::EquipSlots::HEADGEAR ||
+			item->GetArmorProperties().armorType == ArmorProperties::ArmorType::CHEST_BODY && m_eEquipSlots != Stats::EquipSlots::CHEST_BODY ||
+			item->GetArmorProperties().armorType == ArmorProperties::ArmorType::FOOTWEAR && m_eEquipSlots != Stats::EquipSlots::FOOTWEAR
+			)
+			return;
+		break;
+	case Equipment::EquipType::WEAPON:
+		if (m_eEquipSlots != Stats::EquipSlots::WEAPON)
+			return;
+		break;
+	case Equipment::EquipType::ACCESSORY:
+		if (m_eEquipSlots != Stats::EquipSlots::ACCESSORY)
+			return;
+		break;
+	case Equipment::EquipType::NO_TYPE:
+		TRPG_LOG("THERE SHOULD NEVER BE NO TYPE FOR EQUIPMENT");
+		return;
+	}
+
+
+	const auto& name = item->GetName();
+	m_Console.Write(x, y, name);
+
+	const auto& index = m_EquipmentSelector.GetIndex();
+	if (index < m_EquipmentSelector.GetData().size())
+	{
+		const auto& item_desc = m_EquipmentSelector.GetData()[index]->GetDescription();
+		m_Console.Write(m_CenterScreenW - (item_desc.size()/2), 32, item_desc); // TODO: Center the description based on the half size and center
+	}
 }
 
 void EquipmentMenuState::RenderEquipSlots(int x, int y, const std::wstring& item)
 {
+	if (item.empty())
+		return;
 
+	// Render the slot label
+	m_Console.Write(x, y, item + L":");
+	std::wstring equippedItem = L"";
+
+	if (item == L"Weapon")
+	{
+		const auto& weapon = m_Player.GetEquippedItemsSlots()[Stats::EquipSlots::WEAPON];
+
+		if (weapon)
+			equippedItem = weapon->GetName();
+	}
+	else if (item == L"Armor")
+	{
+		const auto& armor = m_Player.GetEquippedItemsSlots()[Stats::EquipSlots::CHEST_BODY];
+
+		if (armor)
+			equippedItem = armor->GetName();
+
+	}
+	else if (item == L"Headgear")
+	{
+		const auto& head_gear = m_Player.GetEquippedItemsSlots()[Stats::EquipSlots::HEADGEAR];
+
+		if (head_gear)
+			equippedItem = head_gear->GetName();
+
+	}
+	else if (item == L"Footwear")
+	{
+		const auto& accessory = m_Player.GetEquippedItemsSlots()[Stats::EquipSlots::FOOTWEAR];
+
+		if (accessory)
+			equippedItem = accessory->GetName();
+	}
+	else if (item == L"Accessory")
+	{
+		const auto& accessory = m_Player.GetEquippedItemsSlots()[Stats::EquipSlots::ACCESSORY];
+
+		if (accessory)
+			equippedItem = accessory->GetName();
+	}
+
+	if (equippedItem.empty())
+		equippedItem = L"Empty";
+
+	m_Console.Write(x + 25, y, equippedItem);
 }
 
 void EquipmentMenuState::RemoveEquipment(int index, std::vector<std::wstring>& data)
@@ -324,10 +411,18 @@ void EquipmentMenuState::RemoveEquipment(int index, std::vector<std::wstring>& d
 	m_Console.ClearBuffer();
 }
 
-void EquipmentMenuState::FocusOnMenu()
+void EquipmentMenuState::UpdateIndex()
 {
+	auto index = m_EquipmentSelector.GetIndex();
 
+	// Clear the description area
+	if (m_PrevIndex != index)
+	{
+		m_PrevIndex = index;
+		m_Console.ClearBuffer();
+	}
 }
+
 
 EquipmentMenuState::EquipmentMenuState(Player& player, Console& console, StateMachine& stateMachine, Keyboard& keyboard)
 	: m_Console(console), m_StateMachine(stateMachine), m_Keyboard(keyboard), m_Player(player)
@@ -354,7 +449,7 @@ EquipmentMenuState::EquipmentMenuState(Player& player, Console& console, StateMa
 	, m_bExitGame{false}, m_bInMenuSelect{true}, m_bInSlotSelect{false}, m_bRemoveEquipment{false}
 	, m_ScreenWidth{console.GetScreenWidth()}, m_ScreenHeight{console.GetScreenHeight()}
 	, m_CenterScreenW{console.GetHalfWidth()}, m_PanelBarX{ m_CenterScreenW - (PANEL_BARS / 2) }
-	, m_DiffPosY{0}, m_PrevStatModPos{0}
+	, m_DiffPosY{0}, m_PrevStatModPos{0}, m_PrevIndex{-1}
 	, m_sCurrentSlot{L"NO_SLOT"}, m_eEquipSlots{Stats::EquipSlots::NO_SLOT}
 {
 	m_MenuSelector.SetSelectionFunc(std::bind(&EquipmentMenuState::OnMenuSelect, this, _1, _2));
@@ -379,7 +474,7 @@ void EquipmentMenuState::OnExit()
 
 void EquipmentMenuState::Update()
 {
-	// NOTHING TO DO HERE
+	UpdateIndex();
 }
 
 void EquipmentMenuState::Draw()

@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "IState.h"
 #include "../Selector.h"
 #include "../Equipment.h"
@@ -30,7 +29,7 @@ private:
 	Selector<std::shared_ptr<Equipment>> m_EquipmentSelector;
 
 	bool m_bExitGame, m_bInMenuSelect, m_bInSlotSelect, m_bRemoveEquipment;
-	int m_ScreenWidth, m_ScreenHeight, m_CenterScreenW, m_PanelBarX, m_DiffPosY, m_PrevStatModPos;
+	int m_ScreenWidth, m_ScreenHeight, m_CenterScreenW, m_PanelBarX, m_DiffPosY, m_PrevStatModPos, m_PrevIndex;
 
 	std::wstring m_sCurrentSlot;
 	Stats::EquipSlots m_eEquipSlots;
@@ -47,7 +46,9 @@ private:
 	void RenderEquipSlots(int x, int y, const std::wstring& item);
 
 	void RemoveEquipment(int index, std::vector<std::wstring>& data);
-	void FocusOnMenu();
+
+	void UpdateIndex();
+
 public:
 	EquipmentMenuState(Player& player, Console& console, StateMachine& stateMachine, Keyboard& keyboard);
 	~EquipmentMenuState();
