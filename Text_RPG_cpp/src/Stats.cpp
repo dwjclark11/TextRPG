@@ -43,7 +43,7 @@ const int Stats::GetStat(const std::wstring& key)
 	if (m_StatList.find(key) == m_StatList.end())
 	{
 		// TRPG_ERROR("[" + key + "] -- Is not a valid stat!");
-		std::wcout << L"[" + key + L"] -- Is not a valid stat!\n";
+		//std::wcout << L"[" + key + L"] -- Is not a valid stat!\n";
 		return 0;
 	}
 
@@ -55,7 +55,7 @@ const int Stats::GetModifier(const std::wstring& key)
 	if (m_StatModifierList.find(key) == m_StatModifierList.end())
 	{
 		// TRPG_ERROR("[" + key + "] -- Is not a valid stat!");
-		std::wcout << L"[" + key + L"] -- Is not a valid stat modifier!\n";
+		//std::wcout << L"[" + key + L"] -- Is not a valid stat modifier!\n";
 		return 0;
 	}
 
@@ -79,7 +79,7 @@ void Stats::SetModifier(const std::wstring& key, int value)
 	if (m_StatModifierList.find(key) == m_StatModifierList.end())
 	{
 		// TRPG_ERROR("[" + key + "] -- Is not a valid stat!");
-		std::wcout << L"[" + key + L"] -- Is not a valid stat modifier!\n";
+		//std::wcout << L"[" + key + L"] -- Is not a valid stat modifier!\n";
 		return;
 	}
 
@@ -103,7 +103,7 @@ void Stats::SetStat(const std::wstring& key, int value)
 	if (m_StatList.find(key) == m_StatList.end())
 	{
 		// TRPG_ERROR("[" + key + "] -- Is not a valid stat!");
-		std::wcout << L"[" + key + L"] -- Is not a valid stat!\n";
+		//std::wcout << L"[" + key + L"] -- Is not a valid stat!\n";
 		return;
 	}
 
