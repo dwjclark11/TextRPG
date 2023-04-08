@@ -163,7 +163,7 @@ inline void Selector<T>::MoveLeft()
 template<typename T>
 inline void Selector<T>::MoveRight()
 {
-	m_Params.currentX = std::max(m_Params.currentX + 1, m_Params.columns - 1);
+	m_Params.currentX = std::min(m_Params.currentX + 1, m_Params.columns - 1);
 }
 
 template<typename T>
