@@ -6,6 +6,7 @@
 #include "../Inventory.h"
 #include <memory>
 #include "../utilities/Timer.h"
+#include "../utilities/Typewriter.h"
 
 class Console;
 class Keyboard;
@@ -22,6 +23,9 @@ private:
 	std::unique_ptr<Party> m_Party;
 	Timer m_Timer;
 
+
+	// Testing
+	Typewriter m_TypeWriter;
 public:
 	GameState(Console& console, Keyboard& keyboard, StateMachine& stateMachine);
 	~GameState();

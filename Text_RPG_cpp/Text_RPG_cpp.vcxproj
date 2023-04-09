@@ -158,6 +158,7 @@
     <ClCompile Include="src\utilities\ItemLoader.cpp" />
     <ClCompile Include="src\utilities\Timer.cpp" />
     <ClCompile Include="src\utilities\trpg_utilities.cpp" />
+    <ClCompile Include="src\utilities\Typewriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libs\tinyxml2\tinyxml2.h" />
@@ -191,6 +192,7 @@
     <ClInclude Include="src\utilities\Parser.h" />
     <ClInclude Include="src\utilities\Timer.h" />
     <ClInclude Include="src\utilities\trpg_utilities.h" />
+    <ClInclude Include="src\utilities\Typewriter.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="libs\tinyxml2\LICENSE.txt" />

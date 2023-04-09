@@ -17,6 +17,15 @@ GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMa
 	, m_Selector(console, keyboard, {L"Start", L"Settings", L"Exit"})
 	, m_Party{nullptr}
 	, m_Timer{}
+	, m_TypeWriter{console, 45, 15, 
+		L"This is the new Typewriter\n"
+		L"The Typewriter will be used for various dialogs within the game!"
+		L"The Typewriter will be used for various dialogs within the game!"
+		L"The Typewriter will be used for various dialogs within the game!"
+		L"The Typewriter will be used for various dialogs within the game!"
+		L"The Typewriter will be used for various dialogs within the game!"
+		L"We will also use this for talking and yadda yadda?", 60, 30, WHITE, BLUE
+	}
 {
 	m_Party = std::make_unique<Party>();
 
@@ -68,7 +77,7 @@ void GameState::OnExit()
 
 void GameState::Update()
 {
-	
+	m_TypeWriter.UpdateText();
 }
 
 void GameState::Draw()
@@ -81,6 +90,9 @@ void GameState::Draw()
 	m_Console.Write(25, 26, time_sec, RED);
 
 	m_Selector.Draw();
+
+	m_TypeWriter.Draw();
+
 	m_Console.Draw();
 }
 
