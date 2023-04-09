@@ -98,8 +98,11 @@ void Console::Write(int x, int y, const std::wstring& text, WORD color)
 	std::vector<wchar_t> invalidCharacters{ L' ', L'\n', L'\t', L'\r' };
 
 	auto is_any_of = [&](wchar_t character) {
-		if (text.size() > 1 || text.empty())
+		if (text.size() > 1)
 			return false;
+
+		if (text.empty())
+			return true;
 
 		return character == text[0]; };
 
