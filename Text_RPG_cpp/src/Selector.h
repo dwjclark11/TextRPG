@@ -54,7 +54,7 @@ public:
 	~Selector();
 
 	void SetData(std::vector<T> data) { m_Data = data; }
-	const std::vector<T>& GetData() { return m_Data; }
+	std::vector<T>& GetData() { return m_Data; }
 	
 	/*
 	* This sets the OnSelection function that MUST be overwritten for each new selector object.
