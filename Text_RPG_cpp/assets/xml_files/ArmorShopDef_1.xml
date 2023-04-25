@@ -1,0 +1,18 @@
+<!-- First Armor Shop -->
+<ArmorShop>
+  <ShopParameters>
+    <ShopType>Armor</ShopType>
+    <Inventory>
+      <ShopItem>
+        <Armor>
+          <Name>Leather Cap</Name>
+        </Armor>
+
+        <Armor>
+          <Name>Leather Shirt</Name>
+        </Armor>
+        
+      </ShopItem>
+    </Inventory>
+  </ShopParameters>
+</ArmorShop>

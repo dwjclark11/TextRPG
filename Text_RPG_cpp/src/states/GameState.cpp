@@ -10,6 +10,9 @@
 #include "../utilities/EquipmentLoader.h"
 #include <cassert>
 
+#include "../utilities/ShopLoader.h"
+
+
 GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMachine)
 	: m_Console(console)
 	, m_Keyboard(keyboard)
@@ -57,6 +60,13 @@ GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMa
 	m_Party->AddMember(std::move(player));
 	m_Party->AddMember(std::move(Dustin));
 	m_Party->AddMember(std::move(Jonah));
+
+
+	ShopLoader sl{};
+	auto shopParameters = sl.CreateShopParametersFromFile("./assets/xml_files/ArmorShopDef_1.xml");
+
+	assert(shopParameters, &"Failed to create shop parameters");
+
 }
 
 GameState::~GameState()

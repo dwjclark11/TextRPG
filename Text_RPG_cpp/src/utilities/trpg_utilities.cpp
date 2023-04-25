@@ -49,6 +49,20 @@ Equipment::EquipType EquipTypeFromString(const std::string& equip_type)
         return Equipment::EquipType::NO_TYPE;
 }
 
+ShopParameters::ShopType ShopTypeFromString(const std::string& shopType)
+{
+    if (shopType == "Weapon")
+        return ShopParameters::ShopType::WEAPON;
+    else if (shopType == "Armor")
+        return ShopParameters::ShopType::ARMOR;
+    else if (shopType == "Accessory")
+        return ShopParameters::ShopType::ACCESSORY;
+    else if (shopType == "Item")
+        return ShopParameters::ShopType::ITEM;
+    else
+        return ShopParameters::ShopType::NOT_A_SHOP;
+}
+
 WeaponProperties::WeaponType WeaponTypeFromString(const std::string& weapon_type)
 {
     if (weapon_type == "Sword")

@@ -1,6 +1,5 @@
 <ArmorDefs>
   <Arms>
-
     <Armor>
       <Name>Leather Shirt</Name>
       <Description>Simple shirt made of quality leather</Description>
@@ -26,6 +25,5 @@
         <ArmorType>Headgear</ArmorType>
       </ArmorProperties>
     </Armor>
-
   </Arms>
 </ArmorDefs>
