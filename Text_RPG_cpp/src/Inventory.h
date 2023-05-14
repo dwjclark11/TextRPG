@@ -16,8 +16,8 @@ public:
 	Inventory();
 	~Inventory() = default;
 
-	const std::vector<std::shared_ptr<Item>>& GetItems() { return m_Items; }
-	const std::vector<std::shared_ptr<Equipment>>& GetEquipment() { return m_Equipment; }
+	std::vector<std::shared_ptr<Item>>& GetItems() { return m_Items; }
+	std::vector<std::shared_ptr<Equipment>>& GetEquipment() { return m_Equipment; }
 
 	bool AddItem(std::shared_ptr<Item> newItem);
 	bool AddEquipment(std::shared_ptr<Equipment> newEquipment);

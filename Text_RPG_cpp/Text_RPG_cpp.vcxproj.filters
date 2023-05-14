@@ -93,6 +93,9 @@
     <ClCompile Include="src\utilities\ShopLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\states\ShopState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -197,6 +200,9 @@
     <ClInclude Include="src\utilities\ShopLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\states\ShopState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="libs\tinyxml2\LICENSE.txt" />
@@ -206,5 +212,6 @@
     <Xml Include="assets\xml_files\WeaponDefs.xml" />
     <Xml Include="assets\xml_files\ArmorDefs.xml" />
     <Xml Include="assets\xml_files\ArmorShopDef_1.xml" />
+    <Xml Include="assets\xml_files\WeaponShopDef_1.xml" />
   </ItemGroup>
 </Project>

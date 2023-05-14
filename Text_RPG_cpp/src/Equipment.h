@@ -86,27 +86,82 @@ protected:
 	void SetEquipType(EquipType type) { m_eEquipType = type; }
 public:
 	virtual ~Equipment() {}
+
+	/*
+	* @brief Gets the value of the equipment. Atk Pwr if weapon,
+	* Def Pwr if Armor, etc.
+	* @return Returns a const int of the value.
+	*/
 	virtual const int GetValue() const = 0;
+	
+	/*
+	* @brief This function needs to be overridden for all equipment.
+	* Adds all stat modifiers and equipment values to the player stats.
+	* @param Takes in the Player& that it is equipped to.
+	* @return returns true if successful, false otherwise.
+	*/
 	virtual bool OnEquip(Player& player) = 0;
+
+	/*
+	* This function needs to be overridden for all equipment.
+	* Removes all stat modifiers and equipment values from the player.
+	* @param Takes in the Player& that it is equipped to.
+	* @return returns true if successful, false otherwise.
+	*/
 	virtual bool OnRemove(Player& player) = 0;
 
+	/*
+	* @brief Sets equipped to false;
+	*/
 	inline void Remove() { if (m_bEquipped) m_bEquipped = false; }
+
+	/*
+	* @brief Sets equipped to true;
+	*/
 	inline void Equip() { if (!m_bEquipped) m_bEquipped = true; }
+
+	/*
+	* @brief Checks to see if the Equipment is currently equipped.
+	* @return Returns true if the item is equipped, false otherwise.
+	*/
 	inline const bool IsEquipped() const { return m_bEquipped; }
+
+
 	inline const std::wstring& GetName() const { return m_sName; }
 	inline const std::wstring& GetDescription() const { return m_sDescription; }
-	inline bool Add(int num) {
+	
+	inline bool Add(int num = 1) 
+	{
 		if (m_Count + num > MAX_COUNT)
 			return false;
 
 		m_Count += num; 
 		return true;
 	}
+
+	inline bool Decrement(int num = 1)
+	{
+		if (m_Count <= 0)
+			return false;
+		if (m_Count - num < 0)
+			return false;
+
+		m_Count--;
+
+		if (m_Count < 0)
+			m_Count = 0;
+
+		return true;
+	}
+
 	inline const int GetCount() const { return m_Count; }
 	inline const Equipment::EquipType GetType() const { return m_eEquipType; }
 	inline const WeaponProperties& GetWeaponProperties() const { return m_WeaponProperties; }
 	inline const ArmorProperties& GetArmorProperties() const { return m_ArmorProperties; }
 	inline const StatModifier& GetStatModifier() const { return m_StatModifier; }
+	inline const int GetBuyPrice() const { return m_BuyPrice; }
+	inline const int GetSellPrice() const { return m_SellPrice; }
+	inline const int GetMaxCount() const { return MAX_COUNT; }
 };
 
 class Weapon : public Equipment

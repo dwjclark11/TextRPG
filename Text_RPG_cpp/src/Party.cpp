@@ -6,7 +6,7 @@
 Party::Party()
 	: m_PartyMembers{}
 	, m_Inventory{}
-	, m_Gold{0}
+	, m_Gold{500}
 	, m_NumActiveMembers{0}
 {
 
@@ -78,7 +78,7 @@ void Party::AddGold(int gold)
 
 bool Party::BuyItem(int price, std::shared_ptr<Item> item)
 {
-	if (m_Gold <= price)
+	if (m_Gold < price)
 		return false;
 
 	if (!m_Inventory.AddItem(std::move(item)))
@@ -96,7 +96,7 @@ bool Party::BuyItem(int price, std::shared_ptr<Item> item)
 
 bool Party::BuyEquipment(int price, std::shared_ptr<Equipment> equipment)
 {
-	if (m_Gold <= price)
+	if (m_Gold < price)
 		return false;
 
 	if (!m_Inventory.AddEquipment(std::move(equipment)))

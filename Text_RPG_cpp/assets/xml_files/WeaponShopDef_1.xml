@@ -1,0 +1,18 @@
+<!-- First Weapon Shop -->
+<WeaponShop>
+  <ShopParameters>
+    <ShopType>Weapon</ShopType>
+    <Inventory>
+      <ShopItem>
+        <Weapon>
+          <Name>Iron Sword</Name>
+        </Weapon>
+
+        <Weapon>
+          <Name>Broad Sword</Name>
+        </Weapon>
+
+      </ShopItem>
+    </Inventory>
+  </ShopParameters>
+</WeaponShop>

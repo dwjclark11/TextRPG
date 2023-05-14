@@ -1,5 +1,6 @@
 #include "GameState.h"
 #include "StateMachine.h"
+#include "ShopState.h"
 #include "../Logger.h"
 #include "../Console.h"
 #include "../inputs/Keyboard.h"
@@ -54,18 +55,12 @@ GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMa
 	m_Party->GetInventory().AddEquipment(std::move(sword));
 	m_Party->GetInventory().AddEquipment(std::move(chest_armor));
 
-	auto player = std::make_shared<Player>(L"Test Player", L"test_player", m_Party->GetInventory(), 150, 200);
-	auto Dustin = std::make_shared<Player>(L"Dustin", L"warrior", m_Party->GetInventory(), 87, 200);
-	auto Jonah = std::make_shared<Player>(L"Jonah", L"thief", m_Party->GetInventory(), 45, 200);
+	auto player = std::make_shared<Player>(L"Test Player", L"test_player", m_Party->GetInventory(), 1, 200);
+	auto Dustin = std::make_shared<Player>(L"Dustin", L"warrior", m_Party->GetInventory(), 1, 200);
+	auto Jonah = std::make_shared<Player>(L"Jonah", L"thief", m_Party->GetInventory(), 1, 200);
 	m_Party->AddMember(std::move(player));
 	m_Party->AddMember(std::move(Dustin));
 	m_Party->AddMember(std::move(Jonah));
-
-
-	ShopLoader sl{};
-	auto shopParameters = sl.CreateShopParametersFromFile("./assets/xml_files/ArmorShopDef_1.xml");
-
-	assert(shopParameters, &"Failed to create shop parameters");
 
 }
 
@@ -119,6 +114,12 @@ void GameState::ProcessInputs()
 	if (m_Keyboard.IsKeyJustPressed(KEY_M))
 	{
 		m_StateMachine.PushState(std::make_unique<GameMenuState>(*m_Party, m_Console, m_StateMachine, m_Keyboard));
+		return;
+	}
+
+	if (m_Keyboard.IsKeyJustPressed(KEY_ENTER))
+	{
+		m_StateMachine.PushState(std::make_unique<ShopState>(*m_Party, m_Console, m_StateMachine, m_Keyboard, "./assets/xml_files/WeaponShopDef_1.xml"));
 		return;
 	}
 
