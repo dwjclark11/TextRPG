@@ -42,10 +42,10 @@ auto slot2str = [&](Stats::EquipSlots slot) {
 	case Stats::EquipSlots::ACCESSORY:
 		return L"ACCESSORY: ";
 	case Stats::EquipSlots::NO_SLOT:
-		assert(false, &"Should always have a slot!");
+		assert(false && "Should always have a slot!");
 		return L"NO_SLOT: ";
 	default: 
-		assert(false, &"Should always have a slot!");
+		assert(false && "Should always have a slot!");
 		return L"";
 	}
 };

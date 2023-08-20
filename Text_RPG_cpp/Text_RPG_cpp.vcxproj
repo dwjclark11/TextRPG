@@ -139,6 +139,7 @@
     <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\Equipment.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\inputs\Button.cpp" />
     <ClCompile Include="src\inputs\Keyboard.cpp" />
     <ClCompile Include="src\Inventory.cpp" />
     <ClCompile Include="src\Logger.cpp" />

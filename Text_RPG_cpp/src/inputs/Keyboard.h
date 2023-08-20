@@ -9,7 +9,7 @@ class Keyboard
 private:
 	Button m_Keys[KEY_LAST];
 public:
-	Keyboard();
+	Keyboard() = default;
 	~Keyboard() = default;
 
 	void Update();

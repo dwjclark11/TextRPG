@@ -1,11 +1,6 @@
 #include "Keyboard.h"
 #include "../Logger.h"
 
-Keyboard::Keyboard()
-{
-	// Nothing to do here
-}
-
 void Keyboard::Update()
 {
 	for (int i = 0; i < KEY_LAST; i++)
@@ -18,7 +13,7 @@ void Keyboard::Update()
 void Keyboard::OnKeyDown(int key)
 {
 	// Check to see if the key is defined
-	if (key > KEY_LAST)
+	if (key >= KEY_LAST)
 	{
 		TRPG_ERROR("[" + std::to_string(key) + "] - Is not defined!");
 		return;
@@ -29,7 +24,7 @@ void Keyboard::OnKeyDown(int key)
 void Keyboard::OnKeyUp(int key)
 {
 	// Check to see if the key is defined
-	if (key > KEY_LAST)
+	if (key >= KEY_LAST)
 	{
 		TRPG_ERROR("[" + std::to_string(key) + "] - Is not defined!");
 		return;
@@ -40,7 +35,7 @@ void Keyboard::OnKeyUp(int key)
 bool Keyboard::IsKeyHeld(int key) const
 {
 	// Check to see if the key is defined
-	if (key > KEY_LAST)
+	if (key >= KEY_LAST)
 	{
 		TRPG_ERROR("[" + std::to_string(key) + "] - Is not defined!");
 		return false;
@@ -50,9 +45,8 @@ bool Keyboard::IsKeyHeld(int key) const
 
 bool Keyboard::IsKeyJustPressed(int key) const
 {
-
 	// Check to see if the key is defined
-	if (key > KEY_LAST)
+	if (key >= KEY_LAST)
 	{
 		TRPG_ERROR("[" + std::to_string(key) + "] - Is not defined!");
 		return false;
@@ -62,9 +56,8 @@ bool Keyboard::IsKeyJustPressed(int key) const
 
 bool Keyboard::IsKeyJustReleased(int key) const
 {
-
 	// Check to see if the key is defined
-	if (key > KEY_LAST)
+	if (key >= KEY_LAST)
 	{
 		TRPG_ERROR("[" + std::to_string(key) + "] - Is not defined!");
 		return false;

@@ -54,7 +54,7 @@ ShopState::ShopState(Party& party, Console& console, StateMachine& stateMachine,
         m_bIsEquipmentShop = false;
         break;
     case ShopParameters::ShopType::NOT_A_SHOP:
-        assert(false, &"Shop type must be set for the shop state!");
+        assert(false && "Shop type must be set for the shop state!");
         break;
     }
 
@@ -309,7 +309,7 @@ void ShopState::BuyEquipment()
         item->GetDescription(),
         item->GetBuyPrice()
     );
-    assert(newItem, &"Failed to create new item!");
+    assert(newItem && "Failed to create new item!");
 
     newItem->Add(m_Quantity - 1);
     
@@ -372,7 +372,7 @@ void ShopState::BuyItems()
         item->GetItemValue(),
         item->GetBuyPrice()
     );
-    assert(newItem, &"Failed to create new item!");
+    assert(newItem && "Failed to create new item!");
 
     newItem->AddItem(m_Quantity - 1);
 
