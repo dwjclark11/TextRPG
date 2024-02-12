@@ -6,12 +6,12 @@
 class Console
 {
 private:
-	const int SCREEN_WIDTH = 128;
-	const int SCREEN_HEIGHT = 48;
+	const SHORT SCREEN_WIDTH = 128;
+	const SHORT SCREEN_HEIGHT = 48;
 
-	const int BUFFER_SIZE = SCREEN_WIDTH * SCREEN_HEIGHT;
-	const int HALF_WIDTH = SCREEN_WIDTH / 2;
-	const int HALF_HEIGHT = SCREEN_HEIGHT / 2;
+	const SHORT BUFFER_SIZE = SCREEN_WIDTH * SCREEN_HEIGHT;
+	const SHORT HALF_WIDTH = SCREEN_WIDTH / 2;
+	const SHORT HALF_HEIGHT = SCREEN_HEIGHT / 2;
 
 	HANDLE m_hConsole;
 	HWND m_hConsoleWindow;

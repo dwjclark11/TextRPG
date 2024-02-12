@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <vector>
 #include <cassert>
+#include <iostream>
 
 bool Console::SetTextColor(int size, int x, int y, HANDLE handle, WORD color)
 {
@@ -32,29 +33,36 @@ Console::Console()
 {
 	// Initialize the screen buffer
 	m_pScreen = std::make_unique<wchar_t[]>(BUFFER_SIZE);
+	auto hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	
+	SMALL_RECT windowRect{.Left = 0, .Top = 0, .Right = SCREEN_WIDTH - 1, .Bottom = SCREEN_HEIGHT - 1 };
+	if (!SetConsoleWindowInfo(hConsole, TRUE, &windowRect))
+	{
+		auto error = GetLastError();
+		TRPG_ERROR("ERROR: " + std::to_string(error));
+		throw("Failed to set the console window info when creating the console!");
+	}
 
+	COORD consoleBuffer{.X = SCREEN_WIDTH, .Y = SCREEN_HEIGHT };
+	if (!SetConsoleScreenBufferSize(hConsole, consoleBuffer))
+	{
+		auto error = GetLastError();
+		TRPG_ERROR("ERROR: " + std::to_string(error));
+		throw("Failed to set the console screen buffer size when creating the console!");
+	}
+	
 	// Get a handle to the console window
 	m_hConsoleWindow = GetConsoleWindow();
 
 	if (!GetWindowRect(m_hConsoleWindow, &m_ConsoleWindowRect))
 		throw("Failed to get the Window Rect when creating the console!");
 
-	// Get the font size 
-	CONSOLE_FONT_INFO font_info;
-	if (!GetCurrentConsoleFont(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &font_info))
-		throw("Failed to get the console font!");
-
-	COORD font_size = GetConsoleFontSize(GetStdHandle(STD_OUTPUT_HANDLE), font_info.nFont);
-
-	int actual_screen_x = SCREEN_WIDTH * font_size.X + 16;
-	int actual_screen_y = SCREEN_HEIGHT * font_size.Y + 48;
-
-	int pos_x = GetSystemMetrics(SM_CXSCREEN) / 2 - (actual_screen_x / 2);
-	int pos_y = GetSystemMetrics(SM_CYSCREEN) / 2 - (actual_screen_y / 2);
-
-	// Set the size and position of the window
-	if (!MoveWindow(m_hConsoleWindow, pos_x, pos_y, actual_screen_x, actual_screen_y, TRUE))
-		throw("Failed to set and move the console window!");
+	// Center the window
+	int posX = GetSystemMetrics(SM_CXSCREEN) / 2 - (m_ConsoleWindowRect.right - m_ConsoleWindowRect.left) / 2;
+	int posY = GetSystemMetrics(SM_CYSCREEN) / 2 - (m_ConsoleWindowRect.bottom - m_ConsoleWindowRect.top) / 2;
+	
+	// Set the window pos, don't change the size
+	SetWindowPos(m_hConsoleWindow, NULL, posX, posY, -1, -1, SWP_NOSIZE);
 
 	// Clear the screen buffer
 	ClearBuffer();
