@@ -35,6 +35,14 @@ Console::Console()
 	m_pScreen = std::make_unique<wchar_t[]>(BUFFER_SIZE);
 	auto hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	
+	COORD consoleBuffer{ .X = SCREEN_WIDTH, .Y = SCREEN_HEIGHT };
+	if (!SetConsoleScreenBufferSize(hConsole, consoleBuffer))
+	{
+		auto error = GetLastError();
+		TRPG_ERROR("ERROR: " + std::to_string(error));
+		throw("Failed to set the console screen buffer size when creating the console!");
+	}
+
 	SMALL_RECT windowRect{.Left = 0, .Top = 0, .Right = SCREEN_WIDTH - 1, .Bottom = SCREEN_HEIGHT - 1 };
 	if (!SetConsoleWindowInfo(hConsole, TRUE, &windowRect))
 	{
@@ -43,14 +51,6 @@ Console::Console()
 		throw("Failed to set the console window info when creating the console!");
 	}
 
-	COORD consoleBuffer{.X = SCREEN_WIDTH, .Y = SCREEN_HEIGHT };
-	if (!SetConsoleScreenBufferSize(hConsole, consoleBuffer))
-	{
-		auto error = GetLastError();
-		TRPG_ERROR("ERROR: " + std::to_string(error));
-		throw("Failed to set the console screen buffer size when creating the console!");
-	}
-	
 	// Get a handle to the console window
 	m_hConsoleWindow = GetConsoleWindow();
 
