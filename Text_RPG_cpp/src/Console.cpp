@@ -29,12 +29,28 @@ void Console::DrawBorder()
 }
 
 Console::Console()
-	: m_pScreen{nullptr}
+	: m_pScreen{ nullptr }
 {
-	// Initialize the screen buffer
-	m_pScreen = std::make_unique<wchar_t[]>(BUFFER_SIZE);
 	auto hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	bool bAdjustBuffer{ false };
+	int minX{ GetSystemMetrics(SM_CXMIN) };
+	int minY{ GetSystemMetrics(SM_CYMIN) };
 	
+	if (minX > SCREEN_WIDTH)
+	{
+		SCREEN_WIDTH = static_cast<SHORT>(minX);
+		bAdjustBuffer = true;
+	}
+
+	if (minY > SCREEN_HEIGHT)
+	{
+		SCREEN_HEIGHT = static_cast<SHORT>(minY);
+		bAdjustBuffer = true;
+	}
+
+	if (bAdjustBuffer)
+		BUFFER_SIZE = SCREEN_WIDTH * SCREEN_HEIGHT;
+
 	COORD consoleBuffer{ .X = SCREEN_WIDTH, .Y = SCREEN_HEIGHT };
 	if (!SetConsoleScreenBufferSize(hConsole, consoleBuffer))
 	{
@@ -64,6 +80,9 @@ Console::Console()
 	// Set the window pos, don't change the size
 	SetWindowPos(m_hConsoleWindow, NULL, posX, posY, -1, -1, SWP_NOSIZE);
 
+	// Initialize the screen buffer
+	m_pScreen = std::make_unique<wchar_t[]>(BUFFER_SIZE);
+
 	// Clear the screen buffer
 	ClearBuffer();
 
@@ -86,7 +105,6 @@ Console::Console()
 	// Hide the cursor 
 	if (!ShowConsoleCursor(false))
 		throw("Failed to hide the console cursor!");
-
 }
 
 Console::~Console()
