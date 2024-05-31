@@ -155,7 +155,7 @@ void Console::Draw()
 {
 	DrawBorder();
 	// Handle all console drawing
-	WriteConsoleOutputCharacter(m_hConsole, m_pScreen.get(), BUFFER_SIZE, { 0, 0 }, &m_BytesWritten);
+	WriteConsoleOutputCharacterW(m_hConsole, m_pScreen.get(), BUFFER_SIZE, { 0, 0 }, &m_BytesWritten);
 }
 
 bool Console::ShowConsoleCursor(bool show)
