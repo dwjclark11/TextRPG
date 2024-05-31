@@ -7,6 +7,14 @@ Currently this is only compatible with windows. It uses direct Windows API calls
 
 This is a work in progress and there are still many different features that we need. 
 
+## Build
+* Clone the repository ```git clone https://github.com/dwjclark11/TextRPG.git```.
+* Go into the repo directory and run ```cmake -S . -B build```.
+* Go into the build directory and run ```cmake --build . --config Debug``` or ```config Release```.
+  * If on MSVC, you can build from the sln that would have been generated.
+  * MSVC also creates new Debug/Release folders when building. The ```assets``` folder gets copied to the ```bin``` folder.
+  * Move the ```assets``` folder into the Debug/Release folders.   
+
 ## Features
 Here are some of the features that have already been implemented. 
 * StateMachine
