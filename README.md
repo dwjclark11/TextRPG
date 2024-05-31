@@ -3,6 +3,7 @@
 # C++ Text RPG
 
 This is the repository for my youtube series that I am working on [**Create a C++ Text RPG**!](https://www.youtube.com/watch?v=B2RPgKxsEVs&list=PL3HUvSWOJR7W9YSPUHodF3SZxAS5_unau&index=1&t=13s) 
+Currently this is only compatible with windows. It uses direct Windows API calls for the Console, Events, Inputs, etc. I may try to make it cross platform; however, I have a lot of other projects that need work as well, so that is on the back burner currently.
 
 This is a work in progress and there are still many different features that we need. 
 
