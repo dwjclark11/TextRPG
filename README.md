@@ -6,6 +6,7 @@ This is the repository for my youtube series that I am working on [**Create a C+
 Currently this is only compatible with windows. It uses direct Windows API calls for the Console, Events, Inputs, etc. I may try to make it cross platform; however, I have a lot of other projects that need work as well, so that is on the back burner currently.
 
 This is a work in progress and there are still many different features that we need. 
+** The current layout works on my machine and my crash on a smaller resolution. There are some magic numbers that are not checking if we are writing beyond the buffer boundaries. **
 
 ## Build
 * Clone the repository ```git clone https://github.com/dwjclark11/TextRPG.git```.
