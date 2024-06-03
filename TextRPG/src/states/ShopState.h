@@ -12,7 +12,7 @@ class Equipment;
 
 class ShopState : public IState
 {
-private:
+  private:
 	const int PANEL_BARS = 90;
 	Party& m_Party;
 	Console& m_Console;
@@ -37,7 +37,6 @@ private:
 	void SellEquipment();
 	void BuyItems();
 	void SellItems();
-	
 
 	// Selector Functions
 	void OnShopMenuSelect(int index, std::vector<std::wstring> data);
@@ -55,12 +54,12 @@ private:
 	void RenderSellItems(int x, int y, std::shared_ptr<Item> item);
 	void RenderSellEquipment(int x, int y, std::shared_ptr<Equipment> item);
 
-
 	void UpdateBuyQuantity(int price);
 	void UpdateSellQuantity(int totalAvailable);
 
-public:
-	ShopState(Party& party, Console& console, StateMachine& stateMachine, Keyboard& keyboard, const std::string& shopFilepath);
+  public:
+	ShopState(Party& party, Console& console, StateMachine& stateMachine, Keyboard& keyboard,
+			  const std::string& shopFilepath);
 	~ShopState();
 
 	virtual void OnEnter() override;
@@ -70,6 +69,4 @@ public:
 	virtual void ProcessInputs() override;
 
 	virtual bool Exit() override;
-
-
 };

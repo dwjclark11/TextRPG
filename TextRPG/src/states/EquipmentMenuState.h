@@ -11,7 +11,7 @@ class Player;
 
 class EquipmentMenuState : public IState
 {
-private:
+  private:
 	const int PANEL_BARS = 90;
 	const int EQUIP_SIZE = 52;
 	const int STAT_PREDICT_X_POS = 75;
@@ -49,7 +49,7 @@ private:
 
 	void UpdateIndex();
 
-public:
+  public:
 	EquipmentMenuState(Player& player, Console& console, StateMachine& stateMachine, Keyboard& keyboard);
 	~EquipmentMenuState();
 

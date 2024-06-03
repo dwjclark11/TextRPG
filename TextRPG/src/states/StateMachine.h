@@ -7,10 +7,10 @@ typedef std::unique_ptr<IState> StatePtr;
 
 class StateMachine
 {
-private:
+  private:
 	std::stack<StatePtr> m_States;
 
-public:
+  public:
 	StateMachine();
 	~StateMachine();
 

@@ -9,16 +9,21 @@
 #include "inputs/Keyboard.h"
 #include "Logger.h"
 
-
 struct SelectorParams
 {
 	int x, y, columns, currentX, currentY, spacingX, spacingY;
 	std::wstring cursor;
 
-	SelectorParams(
-		int x = 20, int y = 10, int columns = 1,
-		int spacing_x = 20, int spacing_y = 5, std::wstring cursor = L"->"
-	) : x{x}, y{y}, columns{columns}, currentX{0}, currentY{0}, spacingX{spacing_x}, spacingY{spacing_y}, cursor{cursor}
+	SelectorParams(int x = 20, int y = 10, int columns = 1, int spacing_x = 20, int spacing_y = 5,
+				   std::wstring cursor = L"->")
+		: x{x}
+		, y{y}
+		, columns{columns}
+		, currentX{0}
+		, currentY{0}
+		, spacingX{spacing_x}
+		, spacingY{spacing_y}
+		, cursor{cursor}
 	{
 	}
 };
@@ -26,7 +31,7 @@ struct SelectorParams
 template <typename T = std::wstring>
 class Selector
 {
-private:
+  private:
 	Console& m_Console;
 	Keyboard& m_Keyboard;
 
@@ -46,16 +51,16 @@ private:
 	void DrawItem(int x, int y, T item);
 	void OnSelection(int index, std::vector<T> data);
 
-public:
+  public:
 	Selector(Console& console, Keyboard& keyboard, std::vector<T> data, SelectorParams params = SelectorParams());
-	Selector(Console& console, Keyboard& keyboard, 
-		std::function<void(int, std::vector<T>)> on_selection, 
-		std::function<void(int, int, T)> on_draw_item, std::vector<T> data, SelectorParams params = SelectorParams());
+	Selector(Console& console, Keyboard& keyboard, std::function<void(int, std::vector<T>)> on_selection,
+			 std::function<void(int, int, T)> on_draw_item, std::vector<T> data,
+			 SelectorParams params = SelectorParams());
 	~Selector();
 
-	void SetData(std::vector<T> data) 
-	{ 
-		m_Data = data; 
+	void SetData(std::vector<T> data)
+	{
+		m_Data = data;
 		m_Rows = static_cast<int>(std::ceil(m_Data.size() / (m_Params.columns == 0 ? 1 : m_Params.columns)));
 
 		// Check to see if rows is < 1
@@ -64,56 +69,52 @@ public:
 	}
 
 	std::vector<T>& GetData() { return m_Data; }
-	
+
 	/*
-	* This sets the OnSelection function that MUST be overwritten for each new selector object.
-	* What each selector does will vary; Therefore, this function should be updated for each new Selector object.
-	* @param This takes in an std::function ~ func(int x, int y, T item).
-	*/
+	 * This sets the OnSelection function that MUST be overwritten for each new selector object.
+	 * What each selector does will vary; Therefore, this function should be updated for each new Selector object.
+	 * @param This takes in an std::function ~ func(int x, int y, T item).
+	 */
 	void SetSelectionFunc(std::function<void(int, std::vector<T>)> on_selection) { m_OnSelection = on_selection; }
-	
+
 	/*
-	* This sets the DrawItem function that should be overwritten for each new selector object
-	* @param This takes in an std::function ~ func(int x, int y, T item). 
-	*/
+	 * This sets the DrawItem function that should be overwritten for each new selector object
+	 * @param This takes in an std::function ~ func(int x, int y, T item).
+	 */
 	void SetDrawFunc(std::function<void(int, int, T)> on_draw_item) { m_OnDrawItem = on_draw_item; }
-	
+
 	void ShowCursor() { m_bShowCursor = true; }
 	void HideCursor() { m_bShowCursor = false; }
-	
+
 	/*
-	* @return This returns the current cursor index as an integer value
-	*/
+	 * @return This returns the current cursor index as an integer value
+	 */
 	const int GetIndex() const { return m_Params.currentX + (m_Params.currentY * m_Params.columns); }
-	
+
 	/*
-	* Process the user inputs. The move functions and the action functions
-	* are called here.
-	*/
+	 * Process the user inputs. The move functions and the action functions
+	 * are called here.
+	 */
 	void ProcessInputs();
 
 	/*
-	* Draw the cursor and all of the Selectable items
-	*/
+	 * Draw the cursor and all of the Selectable items
+	 */
 	void Draw();
 };
 
-template<typename T>
+template <typename T>
 inline Selector<T>::Selector(Console& console, Keyboard& keyboard, std::vector<T> data, SelectorParams params)
 	: Selector(
-		console, 
-		keyboard, 
-		[this](int index, std::vector<T> data) {Selector::OnSelection(index, data); },		 
-		[this](int x, int y, T item) {Selector::DrawItem(x, y, item); },
-		data, params)
+		  console, keyboard, [ this ](int index, std::vector<T> data) { Selector::OnSelection(index, data); },
+		  [ this ](int x, int y, T item) { Selector::DrawItem(x, y, item); }, data, params)
 {
-
 }
 
-template<typename T>
+template <typename T>
 inline Selector<T>::Selector(Console& console, Keyboard& keyboard,
-	std::function<void(int, std::vector<T>)> on_selection,
-	std::function<void(int, int, T)> on_draw_item, std::vector<T> data, SelectorParams params)
+							 std::function<void(int, std::vector<T>)> on_selection,
+							 std::function<void(int, int, T)> on_draw_item, std::vector<T> data, SelectorParams params)
 	: m_Console(console)
 	, m_Keyboard(keyboard)
 	, m_OnSelection(on_selection)
@@ -122,7 +123,7 @@ inline Selector<T>::Selector(Console& console, Keyboard& keyboard,
 	, m_Params(params)
 	, m_bShowCursor(true)
 {
-	// Initialize the number of rows 
+	// Initialize the number of rows
 	m_Rows = std::ceil(m_Data.size() / (params.columns == 0 ? 1 : params.columns));
 
 	// Check to see if rows is < 1
@@ -130,13 +131,12 @@ inline Selector<T>::Selector(Console& console, Keyboard& keyboard,
 		m_Rows = 1;
 }
 
-template<typename T>
+template <typename T>
 inline Selector<T>::~Selector()
 {
-
 }
 
-template<typename T>
+template <typename T>
 inline void Selector<T>::ProcessInputs()
 {
 	if (m_Keyboard.IsKeyJustPressed(KEY_W))
@@ -151,38 +151,38 @@ inline void Selector<T>::ProcessInputs()
 		OnAction();
 }
 
-template<typename T>
+template <typename T>
 inline void Selector<T>::MoveUp()
 {
 	m_Params.currentY = std::max(m_Params.currentY - 1, 0);
 }
 
-template<typename T>
+template <typename T>
 inline void Selector<T>::MoveDown()
 {
 	m_Params.currentY = std::min(m_Params.currentY + 1, m_Rows - 1);
 }
 
-template<typename T>
+template <typename T>
 inline void Selector<T>::MoveLeft()
 {
 	m_Params.currentX = std::max(m_Params.currentX - 1, 0);
 }
 
-template<typename T>
+template <typename T>
 inline void Selector<T>::MoveRight()
 {
 	m_Params.currentX = std::min(m_Params.currentX + 1, m_Params.columns - 1);
 }
 
-template<typename T>
+template <typename T>
 inline void Selector<T>::OnAction()
 {
 	int index = GetIndex();
 	m_OnSelection(index, m_Data);
 }
 
-template<typename T>
+template <typename T>
 inline void Selector<T>::DrawItem(int x, int y, T item)
 {
 	// Check to see if the type is wstring
@@ -198,13 +198,13 @@ inline void Selector<T>::DrawItem(int x, int y, T item)
 }
 
 // This function should be overriden
-template<typename T>
+template <typename T>
 inline void Selector<T>::OnSelection(int index, std::vector<T> data)
 {
 	m_Console.Write(50, 20, L"Index: " + std::to_wstring(index));
 }
 
-template<typename T>
+template <typename T>
 inline void Selector<T>::Draw()
 {
 	// If there is not data, nothing to draw
@@ -252,7 +252,7 @@ inline void Selector<T>::Draw()
 
 			if (itemIndex < maxData)
 			{
-				T item = m_Data[itemIndex];
+				T item = m_Data[ itemIndex ];
 				m_OnDrawItem(x, y, item);
 				x += spacingX;
 				itemIndex++;

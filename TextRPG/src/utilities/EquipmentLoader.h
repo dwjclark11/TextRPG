@@ -4,14 +4,15 @@
 
 class EquipmentLoader : public Parser<Equipment>
 {
-private:
+  private:
 	std::string m_sFilepath;
 	bool m_bWeaponLoader;
 
 	WeaponProperties CreateWeaponProperties(tinyxml2::XMLElement* xmlElement);
 	ArmorProperties CreateArmorProperties(tinyxml2::XMLElement* xmlElement);
 	StatModifier CreateStatModifier(tinyxml2::XMLElement* xmlElement);
-public:
+
+  public:
 	EquipmentLoader(const std::string& filepath, bool weapons = true);
 	~EquipmentLoader();
 

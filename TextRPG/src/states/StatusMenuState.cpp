@@ -19,7 +19,7 @@ void StatusMenuState::DrawStatusPanel()
 
 	m_Console.DrawPanelHorz(m_PanelBarX - 1, 9, PANEL_BARS + 2, YELLOW);
 	m_Console.DrawPanelHorz(m_PanelBarX - 1, 11, PANEL_BARS + 2, YELLOW);
-	
+
 	// Draw Closing Bar
 	m_Console.DrawPanelHorz(m_PanelBarX - 1, (m_ScreenHeight - 2), PANEL_BARS + 2, YELLOW);
 
@@ -28,25 +28,16 @@ void StatusMenuState::DrawStatusPanel()
 	m_Console.DrawPanelVert(m_PanelBarX + PANEL_BARS, 2, 44, YELLOW);
 }
 
-auto slot2str = [&](Stats::EquipSlots slot) {
+auto slot2str = [ & ](Stats::EquipSlots slot) {
 	switch (slot)
 	{
-	case Stats::EquipSlots::WEAPON:
-		return L"WEAPON: ";
-	case Stats::EquipSlots::HEADGEAR:
-		return L"HEADGEAR: ";
-	case Stats::EquipSlots::CHEST_BODY:
-		return L"CHEST: ";
-	case Stats::EquipSlots::FOOTWEAR:
-		return L"FOOTWEAR: ";
-	case Stats::EquipSlots::ACCESSORY:
-		return L"ACCESSORY: ";
-	case Stats::EquipSlots::NO_SLOT:
-		assert(false && "Should always have a slot!");
-		return L"NO_SLOT: ";
-	default: 
-		assert(false && "Should always have a slot!");
-		return L"";
+	case Stats::EquipSlots::WEAPON: return L"WEAPON: ";
+	case Stats::EquipSlots::HEADGEAR: return L"HEADGEAR: ";
+	case Stats::EquipSlots::CHEST_BODY: return L"CHEST: ";
+	case Stats::EquipSlots::FOOTWEAR: return L"FOOTWEAR: ";
+	case Stats::EquipSlots::ACCESSORY: return L"ACCESSORY: ";
+	case Stats::EquipSlots::NO_SLOT: assert(false && "Should always have a slot!"); return L"NO_SLOT: ";
+	default: assert(false && "Should always have a slot!"); return L"";
 	}
 };
 
@@ -82,7 +73,7 @@ void StatusMenuState::DrawPlayerInfo()
 	int i = 0;
 	const auto& equipment = m_Player.GetEquippedItemsSlots();
 
-	for (const auto& [slot, equip] : equipment)
+	for (const auto& [ slot, equip ] : equipment)
 	{
 		m_Console.Write(STAT_LABEL_X_POS, 21 + i, slot2str(slot));
 		m_Console.Write(STAT_VAL_X_POS, 21 + i, equip ? equip->GetName() : L"EMPTY");
@@ -94,7 +85,7 @@ void StatusMenuState::DrawPlayerInfo()
 	m_Console.Write(STAT_LABEL_X_POS, STAT_LABEL_START_Y_POS - 2, L"ATTRIBUTES", YELLOW);
 	m_Console.Write(STAT_LABEL_X_POS, STAT_LABEL_START_Y_POS - 1, L"==========", YELLOW);
 	const auto& stat_list = m_Player.GetStats().GetStatList();
-	for (const auto& [stat, value] : stat_list)
+	for (const auto& [ stat, value ] : stat_list)
 	{
 		const auto& mod_value = m_Player.GetStats().GetModifier(stat);
 		m_Console.Write(STAT_LABEL_X_POS, STAT_LABEL_START_Y_POS + i, stat);
@@ -104,17 +95,20 @@ void StatusMenuState::DrawPlayerInfo()
 }
 
 StatusMenuState::StatusMenuState(Player& player, Console& console, StateMachine& stateMachine, Keyboard& keyboard)
-	: m_Player(player), m_Console(console), m_StateMachine(stateMachine), m_Keyboard(keyboard)
-	, m_ScreenWidth{ console.GetScreenWidth() }, m_ScreenHeight{ console.GetScreenHeight() }
-	, m_CenterScreenW{ console.GetHalfWidth() }, m_PanelBarX{ m_CenterScreenW - (PANEL_BARS / 2) }
-	, m_DiffPosY{ 0 }
+	: m_Player(player)
+	, m_Console(console)
+	, m_StateMachine(stateMachine)
+	, m_Keyboard(keyboard)
+	, m_ScreenWidth{console.GetScreenWidth()}
+	, m_ScreenHeight{console.GetScreenHeight()}
+	, m_CenterScreenW{console.GetHalfWidth()}
+	, m_PanelBarX{m_CenterScreenW - (PANEL_BARS / 2)}
+	, m_DiffPosY{0}
 {
-
 }
 
 StatusMenuState::~StatusMenuState()
 {
-
 }
 
 void StatusMenuState::OnEnter()
@@ -129,7 +123,6 @@ void StatusMenuState::OnExit()
 
 void StatusMenuState::Update()
 {
-
 }
 
 void StatusMenuState::Draw()

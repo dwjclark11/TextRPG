@@ -30,6 +30,6 @@ StatePtr StateMachine::PopState()
 }
 
 StatePtr& StateMachine::GetCurrentState()
-{		
+{
 	return m_States.top();
 }

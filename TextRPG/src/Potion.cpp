@@ -13,7 +13,6 @@ Potion::Potion(const std::wstring& item_name, const std::wstring& desc, int heal
 
 Potion::~Potion()
 {
-
 }
 
 bool Potion::OnUse(Player& player)

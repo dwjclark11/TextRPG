@@ -13,7 +13,6 @@
 
 #include "../utilities/ShopLoader.h"
 
-
 GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMachine)
 	: m_Console(console)
 	, m_Keyboard(keyboard)
@@ -21,15 +20,20 @@ GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMa
 	, m_Selector(console, keyboard, {L"Start", L"Settings", L"Exit"})
 	, m_Party{nullptr}
 	, m_Timer{}
-	, m_TypeWriter{console, 45, 15, 
-		L"This is the new Typewriter\n"
-		L"The Typewriter will be used for various dialogs within the game!"
-		L"The Typewriter will be used for various dialogs within the game!"
-		L"The Typewriter will be used for various dialogs within the game!"
-		L"The Typewriter will be used for various dialogs within the game!"
-		L"The Typewriter will be used for various dialogs within the game!"
-		L"We will also use this for talking and yadda yadda?", 60, 30, WHITE, BLUE
-	}
+	, m_TypeWriter{console,
+				   45,
+				   15,
+				   L"This is the new Typewriter\n"
+				   L"The Typewriter will be used for various dialogs within the game!"
+				   L"The Typewriter will be used for various dialogs within the game!"
+				   L"The Typewriter will be used for various dialogs within the game!"
+				   L"The Typewriter will be used for various dialogs within the game!"
+				   L"The Typewriter will be used for various dialogs within the game!"
+				   L"We will also use this for talking and yadda yadda?",
+				   60,
+				   30,
+				   WHITE,
+				   BLUE}
 {
 	m_Party = std::make_unique<Party>();
 
@@ -38,19 +42,20 @@ GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMa
 	m_Party->GetInventory().AddItem(std::move(potion));
 
 	auto sword = ItemCreator::CreateEquipment(Equipment::EquipType::WEAPON,
-		WeaponProperties(15, WeaponProperties::WeaponType::SWORD),
-		ArmorProperties(),
-		StatModifier(3, StatModifier::ModifierType::STRENGTH),
-		L"Short Sword", L"A small sword of shabby material", 10
-	);
+											  WeaponProperties(15, WeaponProperties::WeaponType::SWORD),
+											  ArmorProperties(),
+											  StatModifier(3, StatModifier::ModifierType::STRENGTH),
+											  L"Short Sword",
+											  L"A small sword of shabby material",
+											  10);
 
 	auto chest_armor = ItemCreator::CreateEquipment(Equipment::EquipType::ARMOR,
-		WeaponProperties(),
-		ArmorProperties(10, ArmorProperties::ArmorType::CHEST_BODY),
-		StatModifier(3, StatModifier::ModifierType::STRENGTH),
-		L"Chest Plate", L"A sturdy chest plate made of iron", 100
-	);
-
+													WeaponProperties(),
+													ArmorProperties(10, ArmorProperties::ArmorType::CHEST_BODY),
+													StatModifier(3, StatModifier::ModifierType::STRENGTH),
+													L"Chest Plate",
+													L"A sturdy chest plate made of iron",
+													100);
 
 	m_Party->GetInventory().AddEquipment(std::move(sword));
 	m_Party->GetInventory().AddEquipment(std::move(chest_armor));
@@ -61,18 +66,16 @@ GameState::GameState(Console& console, Keyboard& keyboard, StateMachine& stateMa
 	m_Party->AddMember(std::move(player));
 	m_Party->AddMember(std::move(Dustin));
 	m_Party->AddMember(std::move(Jonah));
-
 }
 
 GameState::~GameState()
 {
-
 }
 
 void GameState::OnEnter()
 {
 	m_Console.ClearBuffer();
-	EquipmentLoader el{ "./assets/xml_files/ArmorDefs.xml", false };
+	EquipmentLoader el{"./assets/xml_files/ArmorDefs.xml", false};
 	auto equipment = el.CreateObjectFromFile("Leather Shirt");
 	assert(equipment);
 }
@@ -89,7 +92,7 @@ void GameState::Update()
 
 void GameState::Draw()
 {
-	
+
 	std::wstring time_ms = L"MS: " + std::to_wstring(m_Timer.ElapsedMS());
 	std::wstring time_sec = L"SEC: " + std::to_wstring(m_Timer.ElapsedSec());
 
@@ -119,7 +122,8 @@ void GameState::ProcessInputs()
 
 	if (m_Keyboard.IsKeyJustPressed(KEY_ENTER))
 	{
-		m_StateMachine.PushState(std::make_unique<ShopState>(*m_Party, m_Console, m_StateMachine, m_Keyboard, "./assets/xml_files/WeaponShopDef_1.xml"));
+		m_StateMachine.PushState(std::make_unique<ShopState>(
+			*m_Party, m_Console, m_StateMachine, m_Keyboard, "./assets/xml_files/WeaponShopDef_1.xml"));
 		return;
 	}
 

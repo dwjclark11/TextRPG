@@ -10,7 +10,7 @@ class Console;
 
 class Typewriter
 {
-private:
+  private:
 	Console& m_Console;
 	std::wstring m_sText, m_sCurrentText;
 	int m_X, m_Y, m_BorderX, m_BorderY, m_BorderWidth, m_BorderHeight;
@@ -25,9 +25,10 @@ private:
 	void DrawBorder();
 	void ClearArea();
 
-public:
+  public:
 	Typewriter(Console& console);
-	Typewriter(Console& console, int start_x, int start_y, const std::wstring& text, int text_wrap, int speed, WORD textColor = WHITE, WORD borderColor = WHITE);
+	Typewriter(Console& console, int start_x, int start_y, const std::wstring& text, int text_wrap, int speed,
+			   WORD textColor = WHITE, WORD borderColor = WHITE);
 	~Typewriter();
 
 	bool SetText(const std::wstring& text);
@@ -36,5 +37,4 @@ public:
 	void UpdateText();
 	void Draw(bool showborder = true);
 	inline const bool IsFinished() const { return m_bFinished; }
-
 };

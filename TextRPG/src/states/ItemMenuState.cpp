@@ -28,7 +28,6 @@ void ItemState::DrawInventory()
 	// Draw Closing Bar
 	m_Console.DrawPanelHorz(m_PanelBarX - 1, (m_ScreenHeight - 2), PANEL_BARS + 2, BLUE);
 
-
 	// Draw Right bar
 	m_Console.DrawPanelVert(m_PanelBarX - 1, 2, 44, BLUE);
 	m_Console.DrawPanelVert(m_PanelBarX + PANEL_BARS, 2, 44, BLUE);
@@ -63,8 +62,7 @@ void ItemState::SelectorFunc(int index, SelectType type)
 {
 	switch (static_cast<ItemChoice>(index))
 	{
-	case ItemChoice::ITEM:
-	{
+	case ItemChoice::ITEM: {
 		if (type == SelectType::PROCESS_INPUTS)
 			m_ItemSelector.ProcessInputs();
 		else if (type == SelectType::DRAW)
@@ -75,13 +73,11 @@ void ItemState::SelectorFunc(int index, SelectType type)
 			m_ItemSelector.HideCursor();
 		break;
 	}
-	case ItemChoice::KEY_ITEM:
-	{
+	case ItemChoice::KEY_ITEM: {
 		// TODO: Create the key item class to go here
 		break;
 	}
-	default:
-		break;
+	default: break;
 	}
 }
 
@@ -103,10 +99,10 @@ void ItemState::OnItemSelect(int index, std::vector<std::shared_ptr<Item>> data)
 	items.UseItem(index, m_Player);
 
 	// Get the count of the item
-	const auto item_count = data[index]->GetCount();
+	const auto item_count = data[ index ]->GetCount();
 	if (item_count <= 0)
 	{
-		remove(data, index); 
+		remove(data, index);
 		m_ItemSelector.SetData(items.GetItems());
 
 		// Clear the buffer
@@ -126,7 +122,7 @@ void ItemState::RenderItem(int x, int y, std::shared_ptr<Item> item)
 
 	if (index != prevIndex)
 	{
-		// Clear the description area 
+		// Clear the description area
 		m_Console.DrawPanelHorz(m_PanelBarX, 12, PANEL_BARS, BLUE, L" ");
 		prevIndex = index;
 	}
@@ -146,22 +142,23 @@ void ItemState::FocusOnMenu()
 }
 
 ItemState::ItemState(Player& player, Console& console, StateMachine& stateMachine, Keyboard& keyboard)
-	: m_Console(console), m_StateMachine(stateMachine), m_Keyboard(keyboard), m_Player(player)
-	, m_MenuSelector{
-		console, keyboard,
-		{L"Items", L"Key Items"},
-		SelectorParams{50, 10, 2, 25, 0}
-}
-	, m_ItemSelector{
-		console, keyboard,
-		std::bind(&ItemState::OnItemSelect, this, _1, _2),
-		std::bind(&ItemState::RenderItem, this, _1, _2, _3),
-		std::vector<std::shared_ptr<Item>>(),
-		SelectorParams{30, 14, 2, 35, 2}
-	}
-	, m_bExitGame{ false }, m_bInMenuSelect{true}
-	, m_ScreenWidth{console.GetScreenWidth()}, m_ScreenHeight{console.GetScreenHeight()}, m_CenterScreenW{console.GetHalfWidth()}
-	, m_PanelBarX{ m_CenterScreenW - (PANEL_BARS / 2) }
+	: m_Console(console)
+	, m_StateMachine(stateMachine)
+	, m_Keyboard(keyboard)
+	, m_Player(player)
+	, m_MenuSelector{console, keyboard, {L"Items", L"Key Items"}, SelectorParams{50, 10, 2, 25, 0}}
+	, m_ItemSelector{console,
+					 keyboard,
+					 std::bind(&ItemState::OnItemSelect, this, _1, _2),
+					 std::bind(&ItemState::RenderItem, this, _1, _2, _3),
+					 std::vector<std::shared_ptr<Item>>(),
+					 SelectorParams{30, 14, 2, 35, 2}}
+	, m_bExitGame{false}
+	, m_bInMenuSelect{true}
+	, m_ScreenWidth{console.GetScreenWidth()}
+	, m_ScreenHeight{console.GetScreenHeight()}
+	, m_CenterScreenW{console.GetHalfWidth()}
+	, m_PanelBarX{m_CenterScreenW - (PANEL_BARS / 2)}
 {
 	m_MenuSelector.SetSelectionFunc(std::bind(&ItemState::OnMenuSelect, this, _1, _2));
 	m_ItemSelector.SetData(m_Player.GetInventory().GetItems());
@@ -169,7 +166,6 @@ ItemState::ItemState(Player& player, Console& console, StateMachine& stateMachin
 
 ItemState::~ItemState()
 {
-
 }
 
 void ItemState::OnEnter()

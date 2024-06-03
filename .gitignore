@@ -1,1 +1,7 @@
 /build/*
+
+# If folder is opened using Visual Studio,
+# there are some files that are created.
+# ignore them
+/TextRPG/.vs/*
+/TextRPG/out/*

@@ -14,7 +14,7 @@ class StateMachine;
 
 class GameState : public IState
 {
-private:
+  private:
 	Console& m_Console;
 	Keyboard& m_Keyboard;
 	StateMachine& m_StateMachine;
@@ -23,10 +23,10 @@ private:
 	std::unique_ptr<Party> m_Party;
 	Timer m_Timer;
 
-
 	// Testing
 	Typewriter m_TypeWriter;
-public:
+
+  public:
 	GameState(Console& console, Keyboard& keyboard, StateMachine& stateMachine);
 	~GameState();
 

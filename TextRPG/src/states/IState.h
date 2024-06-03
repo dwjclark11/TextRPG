@@ -2,7 +2,7 @@
 
 class IState
 {
-public:
+  public:
 	virtual ~IState() {}
 	virtual void OnEnter() = 0;
 	virtual void OnExit() = 0;

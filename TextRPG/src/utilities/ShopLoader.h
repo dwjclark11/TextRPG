@@ -4,7 +4,7 @@
 
 class ShopLoader : public Parser<ShopParameters>
 {
-public:
+  public:
 	ShopLoader();
 	~ShopLoader();
 

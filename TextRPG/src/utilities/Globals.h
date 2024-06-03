@@ -5,14 +5,15 @@
 
 class TRPG_Globals
 {
-private:
+  private:
 	int m_GameTime, m_SavedGameTime;
 	Timer m_Timer;
 
 	TRPG_Globals();
 
 	static std::unique_ptr<TRPG_Globals> m_pInstance;
-public:
+
+  public:
 	static TRPG_Globals& GetInstance();
 
 	const int GetGameTime() const { return m_GameTime; }

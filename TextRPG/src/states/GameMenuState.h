@@ -10,7 +10,7 @@ class Player;
 
 class GameMenuState : public IState
 {
-private:
+  private:
 	const int PANEL_BARS = 90;
 	const int MENU_SIZE = 27;
 	const int CLEAR_ROW = 90;
@@ -28,8 +28,16 @@ private:
 	int m_ScreenWidth, m_ScreenHeight, m_CenterScreenW, m_PanelBarX;
 	int m_FirstChoice, m_SecondChoice;
 
-	enum class SelectType { ITEM = 0, MAGIC, EQUIPMENT, STATS, ORDER, NONE, };
-	
+	enum class SelectType
+	{
+		ITEM = 0,
+		MAGIC,
+		EQUIPMENT,
+		STATS,
+		ORDER,
+		NONE,
+	};
+
 	SelectType m_eSelectType;
 
 	void DrawPanels();
@@ -41,8 +49,7 @@ private:
 	void SetOrderPlacement(int playerPosition);
 	void UpdatePlayerOrder();
 
-public:
-
+  public:
 	GameMenuState(Party& party, Console& console, StateMachine& stateMachine, Keyboard& keyboard);
 	~GameMenuState();
 

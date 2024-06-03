@@ -5,10 +5,10 @@
 Weapon::Weapon()
 	: Weapon(L"Weapon_Name", L"Weapon description", 0, 0)
 {
-
 }
 
-Weapon::Weapon(const std::wstring& name, const std::wstring& description, int buy_price, WeaponProperties weapon_properties, StatModifier stat_modifier)
+Weapon::Weapon(const std::wstring& name, const std::wstring& description, int buy_price,
+			   WeaponProperties weapon_properties, StatModifier stat_modifier)
 {
 	m_sName = name;
 	m_sDescription = description;
@@ -26,7 +26,7 @@ bool Weapon::OnEquip(Player& player)
 	auto& player_stats = player.GetStats();
 	// Set the weapon pwr
 	player_stats.SetEquipmentValue(Stats::EquipSlots::WEAPON, item_pwr);
-	
+
 	const auto& stat_modifier = GetStatModifier();
 
 	if (stat_modifier.modifierType != StatModifier::ModifierType::NO_TYPE)
@@ -60,10 +60,10 @@ bool Weapon::OnRemove(Player& player)
 Armor::Armor()
 	: Armor(L"Armor_name", L"Armor Description", 0, 0)
 {
-
 }
 
-Armor::Armor(const std::wstring& name, const std::wstring& description, int buy_price, ArmorProperties armor_properties, StatModifier stat_modifier)
+Armor::Armor(const std::wstring& name, const std::wstring& description, int buy_price, ArmorProperties armor_properties,
+			 StatModifier stat_modifier)
 {
 	m_sName = name;
 	m_sDescription = description;
@@ -83,21 +83,11 @@ bool Armor::OnEquip(Player& player)
 	Stats::EquipSlots slot = Stats::EquipSlots::NO_SLOT;
 	switch (m_ArmorProperties.armorType)
 	{
-	case ArmorProperties::ArmorType::HEADGEAR: 
-		slot = Stats::EquipSlots::HEADGEAR;
-		break;
-	case ArmorProperties::ArmorType::CHEST_BODY: 
-		slot = Stats::EquipSlots::CHEST_BODY;
-		break;
-	case ArmorProperties::ArmorType::FOOTWEAR: 
-		slot = Stats::EquipSlots::FOOTWEAR;
-		break;
-	case ArmorProperties::ArmorType::NOT_ARMOR: 
-		slot = Stats::EquipSlots::NO_SLOT;
-		return false;
-	default:
-		slot = Stats::EquipSlots::NO_SLOT;
-		return false;
+	case ArmorProperties::ArmorType::HEADGEAR: slot = Stats::EquipSlots::HEADGEAR; break;
+	case ArmorProperties::ArmorType::CHEST_BODY: slot = Stats::EquipSlots::CHEST_BODY; break;
+	case ArmorProperties::ArmorType::FOOTWEAR: slot = Stats::EquipSlots::FOOTWEAR; break;
+	case ArmorProperties::ArmorType::NOT_ARMOR: slot = Stats::EquipSlots::NO_SLOT; return false;
+	default: slot = Stats::EquipSlots::NO_SLOT; return false;
 	}
 
 	// Get the stat modifier
@@ -122,21 +112,11 @@ bool Armor::OnRemove(Player& player)
 	Stats::EquipSlots slot = Stats::EquipSlots::NO_SLOT;
 	switch (m_ArmorProperties.armorType)
 	{
-	case ArmorProperties::ArmorType::HEADGEAR:
-		slot = Stats::EquipSlots::HEADGEAR;
-		break;
-	case ArmorProperties::ArmorType::CHEST_BODY:
-		slot = Stats::EquipSlots::CHEST_BODY;
-		break;
-	case ArmorProperties::ArmorType::FOOTWEAR:
-		slot = Stats::EquipSlots::FOOTWEAR;
-		break;
-	case ArmorProperties::ArmorType::NOT_ARMOR:
-		slot = Stats::EquipSlots::NO_SLOT;
-		return false;
-	default:
-		slot = Stats::EquipSlots::NO_SLOT;
-		return false;
+	case ArmorProperties::ArmorType::HEADGEAR: slot = Stats::EquipSlots::HEADGEAR; break;
+	case ArmorProperties::ArmorType::CHEST_BODY: slot = Stats::EquipSlots::CHEST_BODY; break;
+	case ArmorProperties::ArmorType::FOOTWEAR: slot = Stats::EquipSlots::FOOTWEAR; break;
+	case ArmorProperties::ArmorType::NOT_ARMOR: slot = Stats::EquipSlots::NO_SLOT; return false;
+	default: slot = Stats::EquipSlots::NO_SLOT; return false;
 	}
 
 	// Get the stat modifier

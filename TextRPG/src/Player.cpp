@@ -6,10 +6,8 @@ Player::Player(const std::wstring& name, const std::wstring& id, Inventory& inve
 	, m_bActive{false}
 	, m_PartyPosition{0}
 {
-
 }
 
 Player::~Player()
 {
-
 }

@@ -11,7 +11,7 @@ class Player;
 
 class StatusMenuState : public IState
 {
-private:
+  private:
 	const int PANEL_BARS = 90;
 	const int STATUS_SIZE = 32;
 	const int STAT_VAL_X_POS = 70;
@@ -28,7 +28,7 @@ private:
 	void DrawStatusPanel();
 	void DrawPlayerInfo();
 
-public:
+  public:
 	StatusMenuState(Player& player, Console& console, StateMachine& stateMachine, Keyboard& keyboard);
 	~StatusMenuState();
 

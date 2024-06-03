@@ -1,9 +1,9 @@
 #include "Timer.h"
 
 Timer::Timer()
-	: m_bIsRunning{false}, m_bIsPaused {false}
+	: m_bIsRunning{false}
+	, m_bIsPaused{false}
 {
-
 }
 
 void Timer::Start()

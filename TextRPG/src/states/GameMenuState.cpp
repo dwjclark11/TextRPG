@@ -3,7 +3,6 @@
 #include "EquipmentMenuState.h"
 #include "StatusMenuState.h"
 
-
 #include "../Party.h"
 #include "../Player.h"
 #include "../Console.h"
@@ -33,7 +32,6 @@ void GameMenuState::DrawPanels()
 	m_Console.DrawPanelVert(m_PanelBarX - 1, 2, 44, BLUE);
 	m_Console.DrawPanelVert(m_PanelBarX + PANEL_BARS, 2, 44, BLUE);
 	m_Console.DrawPanelVert(48, 8, 38, BLUE);
-
 
 	// Draw the game time
 	const auto& time_str = L"TIME: " + TRPG_Globals::GetInstance().GetTime();
@@ -76,29 +74,16 @@ void GameMenuState::OnMenuSelect(int index, std::vector<std::wstring> data)
 {
 	switch (index)
 	{
-	case 0:
-		m_eSelectType = SelectType::ITEM;
-		break;
-	case 1:
-		m_eSelectType = SelectType::MAGIC;
-		break;
-	case 2:
-		m_eSelectType = SelectType::EQUIPMENT;
-		break;
-	case 3:
-		m_eSelectType = SelectType::STATS;
-		break;
-	case 4:
-		m_eSelectType = SelectType::ORDER;
-		break;
+	case 0: m_eSelectType = SelectType::ITEM; break;
+	case 1: m_eSelectType = SelectType::MAGIC; break;
+	case 2: m_eSelectType = SelectType::EQUIPMENT; break;
+	case 3: m_eSelectType = SelectType::STATS; break;
+	case 4: m_eSelectType = SelectType::ORDER; break;
 	case 5:
 		// TODO: Save Game
 		return;
-	case 6:
-		m_bExitGame = true;
-		return;
-	default:
-		return;
+	case 6: m_bExitGame = true; return;
+	default: return;
 	}
 
 	if (m_eSelectType != SelectType::NONE)
@@ -111,7 +96,7 @@ void GameMenuState::OnMenuSelect(int index, std::vector<std::wstring> data)
 
 void GameMenuState::OnPlayerSelect(int index, std::vector<std::shared_ptr<Player>> data)
 {
-	const auto& player = data[index];
+	const auto& player = data[ index ];
 	switch (m_eSelectType)
 	{
 	case SelectType::ITEM:
@@ -126,11 +111,8 @@ void GameMenuState::OnPlayerSelect(int index, std::vector<std::shared_ptr<Player
 	case SelectType::STATS:
 		m_StateMachine.PushState(std::make_unique<StatusMenuState>(*player, m_Console, m_StateMachine, m_Keyboard));
 		break;
-	case SelectType::ORDER:
-		SetOrderPlacement(player->GetPartyPosition());
-		break;
-	default:
-		break;
+	case SelectType::ORDER: SetOrderPlacement(player->GetPartyPosition()); break;
+	default: break;
 	}
 }
 
@@ -165,18 +147,18 @@ void GameMenuState::UpdatePlayerOrder()
 	}
 
 	// sort the original data
-	std::sort(m_Party.GetParty().begin(), m_Party.GetParty().end(),
-		[&](std::shared_ptr<Player>& rh, std::shared_ptr<Player>& lh)
-		{
-			return rh->GetPartyPosition() < lh->GetPartyPosition();
-		});
+	std::sort(m_Party.GetParty().begin(),
+			  m_Party.GetParty().end(),
+			  [ & ](std::shared_ptr<Player>& rh, std::shared_ptr<Player>& lh) {
+				  return rh->GetPartyPosition() < lh->GetPartyPosition();
+			  });
 
 	// sort the selector data
-	std::sort(m_PlayerSelector.GetData().begin(), m_PlayerSelector.GetData().end(),
-		[&](std::shared_ptr<Player>& rh, std::shared_ptr<Player>& lh)
-		{
-			return rh->GetPartyPosition() < lh->GetPartyPosition();
-		});
+	std::sort(m_PlayerSelector.GetData().begin(),
+			  m_PlayerSelector.GetData().end(),
+			  [ & ](std::shared_ptr<Player>& rh, std::shared_ptr<Player>& lh) {
+				  return rh->GetPartyPosition() < lh->GetPartyPosition();
+			  });
 
 	m_FirstChoice = m_SecondChoice = -1;
 	m_bInMenuSelect = true;
@@ -191,23 +173,24 @@ GameMenuState::GameMenuState(Party& party, Console& console, StateMachine& state
 	, m_Console(console)
 	, m_StateMachine(stateMachine)
 	, m_Keyboard(keyboard)
-	, m_MenuSelector{
-		console, 
-		keyboard, 
-		{L"Items", L"Magic", L"Equipment", L"Stats", L"Order", L"Save", L"Exit"},
-		SelectorParams{30, 8, 1, 0, 4}}
-	, m_PlayerSelector{
-		console,
-		keyboard,
-		std::bind(&GameMenuState::OnPlayerSelect, this, _1, _2),
-		std::bind(&GameMenuState::OnDrawPlayerSelect, this, _1, _2, _3),
-		party.GetParty(),
-		SelectorParams{69, 13, 1, 0, 10}}
-	, m_bExitGame{false}, m_bInMenuSelect{true}
+	, m_MenuSelector{console,
+					 keyboard,
+					 {L"Items", L"Magic", L"Equipment", L"Stats", L"Order", L"Save", L"Exit"},
+					 SelectorParams{30, 8, 1, 0, 4}}
+	, m_PlayerSelector{console,
+					   keyboard,
+					   std::bind(&GameMenuState::OnPlayerSelect, this, _1, _2),
+					   std::bind(&GameMenuState::OnDrawPlayerSelect, this, _1, _2, _3),
+					   party.GetParty(),
+					   SelectorParams{69, 13, 1, 0, 10}}
+	, m_bExitGame{false}
+	, m_bInMenuSelect{true}
 	, m_ScreenWidth{console.GetScreenWidth()}
 	, m_ScreenHeight{console.GetScreenHeight()}
-	, m_CenterScreenW{console.GetHalfWidth()}, m_PanelBarX{m_CenterScreenW - (PANEL_BARS / 2)}
-	, m_FirstChoice{-1}, m_SecondChoice{-1}
+	, m_CenterScreenW{console.GetHalfWidth()}
+	, m_PanelBarX{m_CenterScreenW - (PANEL_BARS / 2)}
+	, m_FirstChoice{-1}
+	, m_SecondChoice{-1}
 	, m_eSelectType{SelectType::NONE}
 {
 	m_MenuSelector.SetSelectionFunc(std::bind(&GameMenuState::OnMenuSelect, this, _1, _2));
@@ -248,7 +231,7 @@ void GameMenuState::Draw()
 
 void GameMenuState::ProcessInputs()
 {
-	if (m_bInMenuSelect) 
+	if (m_bInMenuSelect)
 	{
 		if (m_Keyboard.IsKeyJustPressed(KEY_BACKSPACE))
 		{

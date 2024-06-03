@@ -7,14 +7,14 @@
 
 bool Console::SetTextColor(int size, int x, int y, HANDLE handle, WORD color)
 {
-	COORD pos = { x, y };
+	COORD pos = {x, y};
 
 	std::vector<WORD> write(size, color);
 
 	DWORD written = 0;
 	LPDWORD lpNumWritten = &written;
 
-	if (!WriteConsoleOutputAttribute(handle, &write[0], size, pos, lpNumWritten))
+	if (!WriteConsoleOutputAttribute(handle, &write[ 0 ], size, pos, lpNumWritten))
 	{
 		TRPG_ERROR("Unable to change text color!");
 		return false;
@@ -29,13 +29,13 @@ void Console::DrawBorder()
 }
 
 Console::Console()
-	: m_pScreen{ nullptr }
+	: m_pScreen{nullptr}
 {
 	auto hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	bool bAdjustBuffer{ false };
-	int minX{ GetSystemMetrics(SM_CXMIN) };
-	int minY{ GetSystemMetrics(SM_CYMIN) };
-	
+	bool bAdjustBuffer{false};
+	int minX{GetSystemMetrics(SM_CXMIN)};
+	int minY{GetSystemMetrics(SM_CYMIN)};
+
 	if (minX > SCREEN_WIDTH)
 	{
 		SCREEN_WIDTH = static_cast<SHORT>(minX);
@@ -51,7 +51,7 @@ Console::Console()
 	if (bAdjustBuffer)
 		BUFFER_SIZE = SCREEN_WIDTH * SCREEN_HEIGHT;
 
-	COORD consoleBuffer{ .X = SCREEN_WIDTH, .Y = SCREEN_HEIGHT };
+	COORD consoleBuffer{.X = SCREEN_WIDTH, .Y = SCREEN_HEIGHT};
 	if (!SetConsoleScreenBufferSize(hConsole, consoleBuffer))
 	{
 		auto error = GetLastError();
@@ -59,7 +59,7 @@ Console::Console()
 		throw("Failed to set the console screen buffer size when creating the console!");
 	}
 
-	SMALL_RECT windowRect{.Left = 0, .Top = 0, .Right = SCREEN_WIDTH - 1, .Bottom = SCREEN_HEIGHT - 1 };
+	SMALL_RECT windowRect{.Left = 0, .Top = 0, .Right = SCREEN_WIDTH - 1, .Bottom = SCREEN_HEIGHT - 1};
 	if (!SetConsoleWindowInfo(hConsole, TRUE, &windowRect))
 	{
 		auto error = GetLastError();
@@ -76,7 +76,7 @@ Console::Console()
 	// Center the window
 	int posX = GetSystemMetrics(SM_CXSCREEN) / 2 - (m_ConsoleWindowRect.right - m_ConsoleWindowRect.left) / 2;
 	int posY = GetSystemMetrics(SM_CYSCREEN) / 2 - (m_ConsoleWindowRect.bottom - m_ConsoleWindowRect.top) / 2;
-	
+
 	// Set the window pos, don't change the size
 	SetWindowPos(m_hConsoleWindow, NULL, posX, posY, -1, -1, SWP_NOSIZE);
 
@@ -87,14 +87,8 @@ Console::Console()
 	ClearBuffer();
 
 	// Create the screen Buffer
-	m_hConsole = CreateConsoleScreenBuffer(
-		GENERIC_READ | GENERIC_WRITE,
-		0,
-		NULL,
-		CONSOLE_TEXTMODE_BUFFER,
-		NULL
-	);
-	
+	m_hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+
 	if (!m_hConsole)
 		throw("Failed to create the console screen buffer!");
 
@@ -102,35 +96,35 @@ Console::Console()
 	if (!SetConsoleActiveScreenBuffer(m_hConsole))
 		throw("Failed to set the active screen buffer");
 
-	// Hide the cursor 
+	// Hide the cursor
 	if (!ShowConsoleCursor(false))
 		throw("Failed to hide the console cursor!");
 }
 
 Console::~Console()
 {
-
 }
 
 void Console::ClearBuffer()
 {
 	// Set all the values of the buffer to an empty space
 	for (int i = 0; i < BUFFER_SIZE; i++)
-		m_pScreen[i] = L' ';
+		m_pScreen[ i ] = L' ';
 }
 
 void Console::Write(int x, int y, const std::wstring& text, WORD color)
 {
-	std::vector<wchar_t> invalidCharacters{ L' ', L'\n', L'\t', L'\r' };
+	std::vector<wchar_t> invalidCharacters{L' ', L'\n', L'\t', L'\r'};
 
-	auto is_any_of = [&](wchar_t character) {
+	auto is_any_of = [ & ](wchar_t character) {
 		if (text.size() > 1)
 			return false;
 
 		if (text.empty())
 			return true;
 
-		return character == text[0]; };
+		return character == text[ 0 ];
+	};
 
 	if (std::find_if(invalidCharacters.begin(), invalidCharacters.end(), is_any_of) == std::end(invalidCharacters))
 		SetTextColor(text.size(), x, y, m_hConsole, color);
@@ -147,15 +141,15 @@ void Console::Write(int x, int y, const std::wstring& text, WORD color)
 		TRPG_ERROR("Trying to write to a position that is beyond the BUFFER SIZE!");
 		return;
 	}
-		
-	swprintf(&m_pScreen[pos], BUFFER_SIZE, text.c_str());
+
+	swprintf(&m_pScreen[ pos ], BUFFER_SIZE, text.c_str());
 }
 
 void Console::Draw()
 {
 	DrawBorder();
 	// Handle all console drawing
-	WriteConsoleOutputCharacterW(m_hConsole, m_pScreen.get(), BUFFER_SIZE, { 0, 0 }, &m_BytesWritten);
+	WriteConsoleOutputCharacterW(m_hConsole, m_pScreen.get(), BUFFER_SIZE, {0, 0}, &m_BytesWritten);
 }
 
 bool Console::ShowConsoleCursor(bool show)
@@ -186,11 +180,12 @@ void Console::DrawPanelVert(int x, int y, size_t height, WORD color, const std::
 		Write(x, y + i, character, color);
 }
 
-void Console::DrawPanel(int x, int y, size_t width, size_t height, WORD color, const std::wstring& width_char, const std::wstring& height_char)
+void Console::DrawPanel(int x, int y, size_t width, size_t height, WORD color, const std::wstring& width_char,
+						const std::wstring& height_char)
 {
 	DrawPanelHorz(x, y, width, color, width_char);
 	DrawPanelHorz(x, y + height, width, color, width_char);
 
 	DrawPanelVert(x, y + 1, height - 1, color, height_char);
-	DrawPanelVert(x + width - 1, y + 1, height -1, color, height_char);
+	DrawPanelVert(x + width - 1, y + 1, height - 1, color, height_char);
 }

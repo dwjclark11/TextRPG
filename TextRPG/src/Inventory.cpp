@@ -4,7 +4,6 @@
 
 Inventory::Inventory()
 {
-
 }
 
 bool Inventory::AddItem(std::shared_ptr<Item> newItem)
@@ -47,9 +46,9 @@ bool Inventory::UseItem(int index, Player& player)
 		return false;
 	}
 
-	m_Items[index]->OnUse(player);
+	m_Items[ index ]->OnUse(player);
 
-	if (m_Items[index]->GetCount() <= 0)
+	if (m_Items[ index ]->GetCount() <= 0)
 		remove(m_Items, index);
 
 	return true;

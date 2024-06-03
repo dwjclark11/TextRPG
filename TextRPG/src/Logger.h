@@ -7,10 +7,11 @@
 
 class Logger
 {
-private:
+  private:
 	static std::string CurrentDate();
-public:
-	Logger() {};
+
+  public:
+	Logger(){};
 	~Logger() = default;
 
 	static void Log(const std::string_view message);

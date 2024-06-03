@@ -5,15 +5,15 @@
 
 class Player : public Actor
 {
-private:
+  private:
 	Inventory& m_Inventory;
 	bool m_bActive;
 	int m_PartyPosition;
 
-public:
+  public:
 	Player(const std::wstring& name, const std::wstring& id, Inventory& inventory, int level, int max_hp);
 	~Player();
-	
+
 	Inventory& GetInventory() { return m_Inventory; }
 	void SetActive(bool active) { m_bActive = active; }
 	const bool IsActive() const { return m_bActive; }

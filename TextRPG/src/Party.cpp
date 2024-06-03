@@ -9,12 +9,10 @@ Party::Party()
 	, m_Gold{500}
 	, m_NumActiveMembers{0}
 {
-
 }
 
 Party::~Party()
 {
-
 }
 
 bool Party::AddMember(std::shared_ptr<Player> newMember)
@@ -24,7 +22,7 @@ bool Party::AddMember(std::shared_ptr<Player> newMember)
 		TRPG_ERROR("There are already [" + std::to_string(MAX_MEMBERS) + "] members in the Party!\nPlease remove one!");
 		return false;
 	}
-	
+
 	// Check to see if the member is already in the party
 	for (const auto& member : m_PartyMembers)
 	{
@@ -51,7 +49,7 @@ bool Party::RemoveMember(const std::wstring& memberID, bool eliminate)
 {
 	for (int i = 0; i < m_PartyMembers.size(); i++)
 	{
-		auto& member = m_PartyMembers[i];
+		auto& member = m_PartyMembers[ i ];
 		if (member->GetID() != memberID)
 			continue;
 

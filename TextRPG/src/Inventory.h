@@ -8,11 +8,11 @@ class Player;
 
 class Inventory
 {
-private:
+  private:
 	std::vector<std::shared_ptr<Item>> m_Items;
 	std::vector<std::shared_ptr<Equipment>> m_Equipment;
 
-public:
+  public:
 	Inventory();
 	~Inventory() = default;
 

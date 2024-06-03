@@ -3,7 +3,6 @@
 Actor::Actor()
 	: Actor(L"Actor_name", L"Actor_ID", 1, 100, ActorType::WARRIOR)
 {
-
 }
 
 Actor::Actor(const std::wstring& name, const std::wstring& id, int level, int max_hp, ActorType type)
@@ -24,9 +23,8 @@ Actor::Actor(const std::wstring& name, const std::wstring& id, int level, int ma
 		{ Stats::EquipSlots::ACCESSORY, nullptr},
 	}
 	, m_Stats{10, 3, 5, 5, 7} // TEST STATS
-	
+
 {
-	
 }
 
 void Actor::HealHP(int hp)

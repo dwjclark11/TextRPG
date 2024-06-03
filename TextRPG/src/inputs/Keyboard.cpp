@@ -5,8 +5,8 @@ void Keyboard::Update()
 {
 	for (int i = 0; i < KEY_LAST; i++)
 	{
-		m_Keys[i].m_bIsJustPressed = false;
-		m_Keys[i].m_bIsJustReleased = false;
+		m_Keys[ i ].m_bIsJustPressed = false;
+		m_Keys[ i ].m_bIsJustReleased = false;
 	}
 }
 
@@ -18,7 +18,7 @@ void Keyboard::OnKeyDown(int key)
 		TRPG_ERROR("[" + std::to_string(key) + "] - Is not defined!");
 		return;
 	}
-	m_Keys[key].Update(true);
+	m_Keys[ key ].Update(true);
 }
 
 void Keyboard::OnKeyUp(int key)
@@ -29,7 +29,7 @@ void Keyboard::OnKeyUp(int key)
 		TRPG_ERROR("[" + std::to_string(key) + "] - Is not defined!");
 		return;
 	}
-	m_Keys[key].Update(false);
+	m_Keys[ key ].Update(false);
 }
 
 bool Keyboard::IsKeyHeld(int key) const
@@ -40,7 +40,7 @@ bool Keyboard::IsKeyHeld(int key) const
 		TRPG_ERROR("[" + std::to_string(key) + "] - Is not defined!");
 		return false;
 	}
-	return m_Keys[key].m_bIsDown;
+	return m_Keys[ key ].m_bIsDown;
 }
 
 bool Keyboard::IsKeyJustPressed(int key) const
@@ -51,7 +51,7 @@ bool Keyboard::IsKeyJustPressed(int key) const
 		TRPG_ERROR("[" + std::to_string(key) + "] - Is not defined!");
 		return false;
 	}
-	return m_Keys[key].m_bIsJustPressed;
+	return m_Keys[ key ].m_bIsJustPressed;
 }
 
 bool Keyboard::IsKeyJustReleased(int key) const
@@ -62,5 +62,5 @@ bool Keyboard::IsKeyJustReleased(int key) const
 		TRPG_ERROR("[" + std::to_string(key) + "] - Is not defined!");
 		return false;
 	}
-	return m_Keys[key].m_bIsJustReleased;
+	return m_Keys[ key ].m_bIsJustReleased;
 }

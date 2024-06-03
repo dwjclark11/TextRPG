@@ -8,16 +8,15 @@ bool Game::Init()
 {
 	try
 	{
-		m_pConsole = std::make_unique <Console>();
-
+		m_pConsole = std::make_unique<Console>();
 	}
-	catch(std::exception& e)
+	catch (std::exception& e)
 	{
 		std::string error = e.what();
 		TRPG_ERROR(error);
 		return false;
 	}
-	
+
 	m_hConsoleIn = GetStdHandle(STD_INPUT_HANDLE);
 	m_pKeyboard = std::make_unique<Keyboard>();
 	m_pStateMachine = std::make_unique<StateMachine>();
@@ -49,13 +48,10 @@ void Game::ProcessEvents()
 
 	for (int i = 0; i < m_NumRead; i++)
 	{
-		switch (m_InRecBuf[i].EventType)
+		switch (m_InRecBuf[ i ].EventType)
 		{
-		case KEY_EVENT:
-			KeyEventProcess(m_InRecBuf[i].Event.KeyEvent);
-			break;
-		default:
-			break;
+		case KEY_EVENT: KeyEventProcess(m_InRecBuf[ i ].Event.KeyEvent); break;
+		default: break;
 		}
 	}
 
@@ -74,7 +70,7 @@ void Game::ProcessInputs()
 		m_bIsRunning = false;
 		return;
 	}
-		
+
 	m_pStateMachine->GetCurrentState()->ProcessInputs();
 }
 
@@ -120,19 +116,16 @@ Game::Game()
 	, m_pKeyboard{nullptr}
 	, m_pStateMachine{nullptr}
 {
-
 }
 
 Game::~Game()
 {
-
 }
 
 void Game::Run()
 {
 	if (!Init())
 		m_bIsRunning = false;
-	
 
 	while (m_bIsRunning)
 	{

@@ -9,7 +9,7 @@ class Player;
 
 class Party
 {
-private:
+  private:
 	const int MAX_ACTIVE_MEMBERS = 4;
 	const int MAX_MEMBERS = 16;
 	const int MAX_GOLD = 99999;
@@ -20,7 +20,7 @@ private:
 	int m_Gold;
 	int m_NumActiveMembers;
 
-public:
+  public:
 	Party();
 	~Party();
 
@@ -34,5 +34,4 @@ public:
 
 	bool BuyItem(int price, std::shared_ptr<Item> item);
 	bool BuyEquipment(int price, std::shared_ptr<Equipment> equipment);
-
 };

@@ -11,7 +11,7 @@ class Player;
 
 class ItemState : public IState
 {
-private:	
+  private:
 	const int PANEL_BARS = 90;
 	const int MENU_SIZE = 27;
 
@@ -26,8 +26,18 @@ private:
 	bool m_bExitGame, m_bInMenuSelect;
 	int m_ScreenWidth, m_ScreenHeight, m_CenterScreenW, m_PanelBarX;
 
-	enum class ItemChoice { ITEM = 0, KEY_ITEM};
-	enum class SelectType { DRAW, PROCESS_INPUTS, HIDE, SHOW };
+	enum class ItemChoice
+	{
+		ITEM = 0,
+		KEY_ITEM
+	};
+	enum class SelectType
+	{
+		DRAW,
+		PROCESS_INPUTS,
+		HIDE,
+		SHOW
+	};
 
 	void DrawInventory();
 	void DrawPlayerInfo();
@@ -38,7 +48,8 @@ private:
 	void RenderItem(int x, int y, std::shared_ptr<Item> item);
 
 	void FocusOnMenu();
-public:
+
+  public:
 	ItemState(Player& player, Console& console, StateMachine& stateMachine, Keyboard& keyboard);
 	~ItemState();
 

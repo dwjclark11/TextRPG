@@ -4,9 +4,10 @@
 
 class ItemLoader : public Parser<Item>
 {
-private:
+  private:
 	std::string m_sFilepath;
-public:
+
+  public:
 	ItemLoader(const std::string& filepath);
 	~ItemLoader();
 

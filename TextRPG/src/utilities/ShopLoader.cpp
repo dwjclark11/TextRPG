@@ -5,7 +5,6 @@
 #include "EquipmentLoader.h"
 #include "ItemLoader.h"
 
-
 using namespace tinyxml2;
 
 ShopLoader::ShopLoader()
@@ -15,7 +14,6 @@ ShopLoader::ShopLoader()
 
 ShopLoader::~ShopLoader()
 {
-
 }
 
 std::unique_ptr<ShopParameters> ShopLoader::CreateShopParametersFromFile(const std::string& shop_filepath)
@@ -67,9 +65,9 @@ std::unique_ptr<ShopParameters> ShopLoader::CreateShopParametersFromFile(const s
 
 	std::unique_ptr<Inventory> inventory = std::make_unique<Inventory>();
 	ShopParameters::ShopType shopType = ShopTypeFromString(shopTypeStr);
-	std::string definitionLocation{ "" };
-	bool itemLoader{ false };
-	bool weaponLoader{ false };
+	std::string definitionLocation{""};
+	bool itemLoader{false};
+	bool weaponLoader{false};
 
 	switch (shopType)
 	{
@@ -77,19 +75,13 @@ std::unique_ptr<ShopParameters> ShopLoader::CreateShopParametersFromFile(const s
 		definitionLocation = "./assets/xml_files/WeaponDefs.xml";
 		weaponLoader = true;
 		break;
-	case ShopParameters::ShopType::ARMOR:
-		definitionLocation = "./assets/xml_files/ArmorDefs.xml";
-		break;
-	case ShopParameters::ShopType::ACCESSORY:
-		definitionLocation = "./assets/xml_files/AccessoryDefs.xml";
-		break;
+	case ShopParameters::ShopType::ARMOR: definitionLocation = "./assets/xml_files/ArmorDefs.xml"; break;
+	case ShopParameters::ShopType::ACCESSORY: definitionLocation = "./assets/xml_files/AccessoryDefs.xml"; break;
 	case ShopParameters::ShopType::ITEM:
 		definitionLocation = "./assets/xml_files/ItemDefs.xml";
 		itemLoader = true;
 		break;
-	case ShopParameters::ShopType::NOT_A_SHOP:		
-		TRPG_ERROR("Shop Type is not a known type!")
-		return nullptr;
+	case ShopParameters::ShopType::NOT_A_SHOP: TRPG_ERROR("Shop Type is not a known type!") return nullptr;
 	}
 
 	// Create the item loader if item shop
@@ -98,7 +90,7 @@ std::unique_ptr<ShopParameters> ShopLoader::CreateShopParametersFromFile(const s
 		itemLoaderPtr = std::make_unique<ItemLoader>(definitionLocation);
 
 	// Create the equipment loader if equipment shop
-	std::unique_ptr<EquipmentLoader> equipmentLoader{ nullptr };
+	std::unique_ptr<EquipmentLoader> equipmentLoader{nullptr};
 	if (!itemLoader)
 		equipmentLoader = std::make_unique<EquipmentLoader>(definitionLocation, weaponLoader);
 
@@ -109,7 +101,6 @@ std::unique_ptr<ShopParameters> ShopLoader::CreateShopParametersFromFile(const s
 		TRPG_ERROR("Failed to get the Shop items");
 		return nullptr;
 	}
-
 
 	// Get the first item
 	XMLElement* pItem = pShopItem->FirstChildElement(shopTypeStr.c_str());
@@ -129,7 +120,7 @@ std::unique_ptr<ShopParameters> ShopLoader::CreateShopParametersFromFile(const s
 			return nullptr;
 		}
 
-		std::string name{ pName->GetText() };
+		std::string name{pName->GetText()};
 
 		if (itemLoader)
 		{
@@ -137,7 +128,6 @@ std::unique_ptr<ShopParameters> ShopLoader::CreateShopParametersFromFile(const s
 
 			if (newItem)
 				inventory->AddItem(std::move(newItem));
-
 		}
 		else // Load Equipment
 		{
@@ -150,7 +140,7 @@ std::unique_ptr<ShopParameters> ShopLoader::CreateShopParametersFromFile(const s
 		pItem = pItem->NextSiblingElement(shopTypeStr.c_str());
 	}
 
-	// Create the shop parameters 
+	// Create the shop parameters
 	std::unique_ptr<ShopParameters> shop_parameters = std::make_unique<ShopParameters>(std::move(inventory), shopType);
 
 	if (!shop_parameters)
