@@ -112,9 +112,12 @@ void ItemState::OnItemSelect(int index, std::vector<std::shared_ptr<Item>> data)
 
 void ItemState::RenderItem(int x, int y, std::shared_ptr<Item> item)
 {
-	int index = m_ItemSelector.GetIndex();
 	static int prevIndex = 0;
+
+	int index = m_ItemSelector.GetIndex();
 	const auto& data = m_ItemSelector.GetData();
+	if (index >= data.size())
+		return;
 
 	const std::wstring& item_name = item->GetItemName();
 	m_Console.Write(x, y, item_name);
@@ -122,16 +125,13 @@ void ItemState::RenderItem(int x, int y, std::shared_ptr<Item> item)
 
 	if (index != prevIndex)
 	{
-		// Clear the description area
+		// Clear the description area 
 		m_Console.DrawPanelHorz(m_PanelBarX, 12, PANEL_BARS, BLUE, L" ");
 		prevIndex = index;
 	}
 
-	if (index < data.size())
-	{
-		const std::wstring& item_desc = item->GetDescription();
-		m_Console.Write(m_CenterScreenW - static_cast<int>(item_desc.size() / 2), 12, item_desc, LIGHT_BLUE);
-	}
+	const std::wstring& item_desc = data[index]->GetDescription();
+	m_Console.Write(m_CenterScreenW - static_cast<int>(item_desc.size() / 2), 12, item_desc, LIGHT_BLUE);
 }
 
 void ItemState::FocusOnMenu()
