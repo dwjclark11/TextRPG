@@ -1,7 +1,6 @@
-#include "Stats.h"
-#include "Logger.h"
+#include "stats/Stats.h"
+#include "utilities/Logger.h"
 #include <iostream>
-
 Stats::Stats()
 	: Stats(0, 0, 0, 0, 0)
 {

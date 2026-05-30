@@ -1,4 +1,4 @@
-#include "Actor.h"
+#include "actor/Actor.h"
 
 Actor::Actor()
 	: Actor(L"Actor_name", L"Actor_ID", 1, 100, ActorType::WARRIOR)

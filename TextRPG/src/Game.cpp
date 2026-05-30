@@ -1,27 +1,19 @@
 #include "Game.h"
-#include <iostream>
-#include "Logger.h"
-#include "states/GameState.h"
+#include "ui/Console.h"
+#include "inputs/Keyboard.h"
+
+#include "states/StateMachine.h"
+#include "states/TitleState.h"
+
+#include "utilities/Logger.h"
 #include "utilities/Globals.h"
+
+#include "actor/Party.h"
 
 bool Game::Init()
 {
-	try
-	{
-		m_pConsole = std::make_unique<Console>();
-	}
-	catch (std::exception& e)
-	{
-		std::string error = e.what();
-		TRPG_ERROR(error);
-		return false;
-	}
-
 	m_hConsoleIn = GetStdHandle(STD_INPUT_HANDLE);
-	m_pKeyboard = std::make_unique<Keyboard>();
-	m_pStateMachine = std::make_unique<StateMachine>();
-
-	m_pStateMachine->PushState(std::make_unique<GameState>(*m_pConsole, *m_pKeyboard, *m_pStateMachine));
+	m_pStateMachine->PushState(std::make_unique<TitleState>( m_Context ));
 
 	return true;
 }
@@ -111,11 +103,14 @@ void Game::KeyEventProcess(KEY_EVENT_RECORD keyEvent)
 }
 
 Game::Game()
-	: m_bIsRunning{true}
-	, m_pConsole{nullptr}
-	, m_pKeyboard{nullptr}
-	, m_pStateMachine{nullptr}
+	: m_pConsole{ std::make_unique<Console>() }
+	, m_pKeyboard{ std::make_unique<Keyboard>() }
+	, m_pStateMachine{ std::make_unique<StateMachine>() }
+	, m_pParty{ std::make_unique<Party>() }
+	, m_Context{ .console = *m_pConsole, .stateMachine = *m_pStateMachine, .party = *m_pParty, .keyboard = *m_pKeyboard }
+	, m_bIsRunning{ true }
 {
+
 }
 
 Game::~Game()
@@ -135,6 +130,4 @@ void Game::Run()
 		Update();
 		Draw();
 	}
-
-	std::cout << "Bye Bye\n";
 }

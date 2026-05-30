@@ -1,0 +1,22 @@
+<file>
+  <Actors>
+    <Actor>
+      <Name>Dustin</Name>
+      <ID>warrior</ID>
+      <Type>Player</Type>
+    </Actor>
+
+    <Actor>
+      <Name>Donavan</Name>
+      <ID>black_mage</ID>
+      <Type>Player</Type>
+    </Actor>
+
+    <Actor>
+      <Name>Elijah</Name>
+      <ID>red_mage</ID>
+      <Type>Player</Type>
+    </Actor>
+
+  </Actors>
+</file>

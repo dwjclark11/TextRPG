@@ -1,6 +1,6 @@
-#include "Equipment.h"
-#include "Player.h"
-#include "Logger.h"
+#include "items/Equipment.h"
+#include "actor/Player.h"
+#include "utilities/Logger.h"
 
 Weapon::Weapon()
 	: Weapon(L"Weapon_Name", L"Weapon description", 0, 0)

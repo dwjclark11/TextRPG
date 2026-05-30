@@ -1,13 +1,18 @@
-#include "Party.h"
-#include "Player.h"
-#include "Logger.h"
-#include "utilities/trpg_utilities.h"
+#include "actor/Party.h"
+#include "actor/Player.h"
+#include "utilities/Logger.h"
+#include "utilities/Utilities.h"
+
+constexpr int MAX_ACTIVE_MEMBERS = 4;
+constexpr int MAX_MEMBERS = 16;
+constexpr int MAX_GOLD = 99999;
+
 
 Party::Party()
 	: m_PartyMembers{}
 	, m_Inventory{}
-	, m_Gold{500}
-	, m_NumActiveMembers{0}
+	, m_Gold{ 500 }
+	, m_NumActiveMembers{ 0 }
 {
 }
 
@@ -57,7 +62,9 @@ bool Party::RemoveMember(const std::wstring& memberID, bool eliminate)
 		m_NumActiveMembers--;
 
 		if (eliminate)
-			remove(m_PartyMembers, i);
+		{
+			Utilities::remove(m_PartyMembers, i);
+		}
 
 		return true;
 	}

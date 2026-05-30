@@ -1,6 +1,6 @@
-#include "Inventory.h"
-#include "Logger.h"
-#include "utilities/trpg_utilities.h"
+#include "items/Inventory.h"
+#include "utilities/Logger.h"
+#include "utilities/Utilities.h"
 
 Inventory::Inventory()
 {
@@ -49,7 +49,9 @@ bool Inventory::UseItem(int index, Player& player)
 	m_Items[ index ]->OnUse(player);
 
 	if (m_Items[ index ]->GetCount() <= 0)
-		remove(m_Items, index);
+	{
+		Utilities::remove(m_Items, index);
+	}
 
 	return true;
 }

@@ -1,5 +1,10 @@
-#include "Potion.h"
-#include "Player.h"
+#include "items/Potion.h"
+#include "actor/Player.h"
+
+Potion::Potion()
+	: Potion(L"item_name", L"Item Description", 10, 10)
+{
+}
 
 Potion::Potion(const std::wstring& item_name, const std::wstring& desc, int health, int buy_price)
 {
@@ -11,9 +16,7 @@ Potion::Potion(const std::wstring& item_name, const std::wstring& desc, int heal
 	SetType(ItemType::HEALTH);
 }
 
-Potion::~Potion()
-{
-}
+Potion::~Potion() = default;
 
 bool Potion::OnUse(Player& player)
 {

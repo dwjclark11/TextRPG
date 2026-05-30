@@ -1,11 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "Logger.h"
+#include "utilities/Logger.h"
+#include "utilities/Colors.h"
 #include <chrono>
 #include <ctime>
-#include <Windows.h>
-#include "utilities/Colors.h"
 #include <iostream>
+
+#include <Windows.h>
 
 std::string Logger::CurrentDate()
 {
@@ -31,5 +32,6 @@ void Logger::Error(const std::string_view message, std::source_location location
 	SetConsoleTextAttribute(hConsole, RED);
 	std::cout << "ERROR: " << CurrentDate() << " - " << message << "\nFILE: " << location.file_name()
 			  << "\nFUNC: " << location.function_name() << "\nLINE: " << location.line() << "\n\n";
+
 	SetConsoleTextAttribute(hConsole, WHITE);
 }

@@ -1,5 +1,6 @@
-#include "Console.h"
-#include "Logger.h"
+#include "ui/Console.h"
+#include "utilities/Logger.h"
+
 #include <algorithm>
 #include <vector>
 #include <cassert>
@@ -29,76 +30,106 @@ void Console::DrawBorder()
 }
 
 Console::Console()
-	: m_pScreen{nullptr}
+    : m_pScreen{ nullptr }
 {
-	auto hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	bool bAdjustBuffer{false};
-	int minX{GetSystemMetrics(SM_CXMIN)};
-	int minY{GetSystemMetrics(SM_CYMIN)};
+    m_hConsole = CreateConsoleScreenBuffer(
+        GENERIC_READ | GENERIC_WRITE,
+        0,
+        nullptr,
+        CONSOLE_TEXTMODE_BUFFER,
+        nullptr
+    );
 
-	if (minX > SCREEN_WIDTH)
-	{
-		SCREEN_WIDTH = static_cast<SHORT>(minX);
-		bAdjustBuffer = true;
-	}
+    if (m_hConsole == INVALID_HANDLE_VALUE)
+    {
+        throw("Failed to create the console screen buffer!");
+    }
 
-	if (minY > SCREEN_HEIGHT)
-	{
-		SCREEN_HEIGHT = static_cast<SHORT>(minY);
-		bAdjustBuffer = true;
-	}
+    COORD largestSize = GetLargestConsoleWindowSize(m_hConsole);
 
-	if (bAdjustBuffer)
-		BUFFER_SIZE = SCREEN_WIDTH * SCREEN_HEIGHT;
+    if (SCREEN_WIDTH > largestSize.X)
+    {
+        SCREEN_WIDTH = largestSize.X;
+    }
 
-	COORD consoleBuffer{.X = SCREEN_WIDTH, .Y = SCREEN_HEIGHT};
-	if (!SetConsoleScreenBufferSize(hConsole, consoleBuffer))
-	{
-		auto error = GetLastError();
-		TRPG_ERROR("ERROR: " + std::to_string(error));
-		throw("Failed to set the console screen buffer size when creating the console!");
-	}
+    if (SCREEN_HEIGHT > largestSize.Y)
+    {
+        SCREEN_HEIGHT = largestSize.Y;
+    }
 
-	SMALL_RECT windowRect{.Left = 0, .Top = 0, .Right = SCREEN_WIDTH - 1, .Bottom = SCREEN_HEIGHT - 1};
-	if (!SetConsoleWindowInfo(hConsole, TRUE, &windowRect))
-	{
-		auto error = GetLastError();
-		TRPG_ERROR("ERROR: " + std::to_string(error));
-		throw("Failed to set the console window info when creating the console!");
-	}
+    BUFFER_SIZE = SCREEN_WIDTH * SCREEN_HEIGHT;
 
-	// Get a handle to the console window
-	m_hConsoleWindow = GetConsoleWindow();
+    COORD bufferSize =
+    {
+        SCREEN_WIDTH,
+        SCREEN_HEIGHT
+    };
 
-	if (!GetWindowRect(m_hConsoleWindow, &m_ConsoleWindowRect))
-		throw("Failed to get the Window Rect when creating the console!");
+    if (!SetConsoleScreenBufferSize(m_hConsole, bufferSize))
+    {
+        auto error = GetLastError();
+        TRPG_ERROR("ERROR: " + std::to_string(error));
+        throw("Failed to set the console screen buffer size!");
+    }
 
-	// Center the window
-	int posX = GetSystemMetrics(SM_CXSCREEN) / 2 - (m_ConsoleWindowRect.right - m_ConsoleWindowRect.left) / 2;
-	int posY = GetSystemMetrics(SM_CYSCREEN) / 2 - (m_ConsoleWindowRect.bottom - m_ConsoleWindowRect.top) / 2;
+    SMALL_RECT windowRect =
+    {
+        0,
+        0,
+        static_cast<SHORT>(SCREEN_WIDTH - 1),
+        static_cast<SHORT>(SCREEN_HEIGHT - 1)
+    };
 
-	// Set the window pos, don't change the size
-	SetWindowPos(m_hConsoleWindow, NULL, posX, posY, -1, -1, SWP_NOSIZE);
+    if (!SetConsoleWindowInfo(m_hConsole, TRUE, &windowRect))
+    {
+        auto error = GetLastError();
+        TRPG_ERROR("ERROR: " + std::to_string(error));
+        throw("Failed to set the console window info!");
+    }
 
-	// Initialize the screen buffer
-	m_pScreen = std::make_unique<wchar_t[]>(BUFFER_SIZE);
+    if (!SetConsoleActiveScreenBuffer(m_hConsole))
+    {
+        throw("Failed to set the active screen buffer!");
+    }
 
-	// Clear the screen buffer
-	ClearBuffer();
+    m_hConsoleWindow = GetConsoleWindow();
 
-	// Create the screen Buffer
-	m_hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+    if (!m_hConsoleWindow)
+    {
+        throw("Failed to get the console window handle!");
+    }
 
-	if (!m_hConsole)
-		throw("Failed to create the console screen buffer!");
+    ShowWindow(m_hConsoleWindow, SW_RESTORE);
 
-	// Set the buffer to be active!
-	if (!SetConsoleActiveScreenBuffer(m_hConsole))
-		throw("Failed to set the active screen buffer");
+    if (!GetWindowRect(m_hConsoleWindow, &m_ConsoleWindowRect))
+    {
+        throw("Failed to get the Window Rect when creating the console!");
+    }
 
-	// Hide the cursor
-	if (!ShowConsoleCursor(false))
-		throw("Failed to hide the console cursor!");
+    int windowWidth = m_ConsoleWindowRect.right - m_ConsoleWindowRect.left;
+    int windowHeight = m_ConsoleWindowRect.bottom - m_ConsoleWindowRect.top;
+
+    int posX = GetSystemMetrics(SM_CXSCREEN) / 2 - windowWidth / 2;
+    int posY = GetSystemMetrics(SM_CYSCREEN) / 2 - windowHeight / 2;
+
+    SetWindowPos(
+        m_hConsoleWindow,
+        nullptr,
+        posX,
+        posY,
+        0,
+        0,
+        SWP_NOSIZE | SWP_NOZORDER
+    );
+
+    m_pScreen = std::make_unique<wchar_t[]>(BUFFER_SIZE);
+
+    ClearBuffer();
+
+    if (!ShowConsoleCursor(false))
+    {
+        throw("Failed to hide the console cursor!");
+    }
 }
 
 Console::~Console()
